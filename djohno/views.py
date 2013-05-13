@@ -1,5 +1,5 @@
 from django.views.generic import TemplateView, View
-from django.http.response import (
+from django.http import (
     HttpResponseBadRequest,
     HttpResponseForbidden,
     HttpResponseNotFound,
