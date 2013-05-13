@@ -32,12 +32,6 @@ ROOT_URLCONF = 'test_urls'
 
 PASSWORD_HASHERS = (
     'django.contrib.auth.hashers.MD5PasswordHasher',
-    'django.contrib.auth.hashers.SHA1PasswordHasher',
 )
 
-TIME_ZONE = 'Europe/London'
-LANGUAGE_CODE = 'en-gb'
 SITE_ID = 1
-USE_I18N = True
-USE_L10N = True
-USE_TZ = True
