@@ -6,7 +6,7 @@ setup(
     name='djohno',
     version=djohno.__version__,
     description="I'll fill this in later.",
-    long_description=open('README.md').read(),
+    long_description="I'll fill this in later too.",
     author='Dominic Rodger',
     author_email='internet@dominicrodger.com',
     url='http://github.com/dominicrodger/djohno',
@@ -14,7 +14,7 @@ setup(
     packages=find_packages(),
     include_package_data=True,
     install_requires=[
-        "Django==1.5.1",
+        "Django>=1.4",
     ],
     tests_require=(
         'django-setuptest==0.1.2',
