@@ -16,4 +16,8 @@ setup(
     install_requires=[
         "Django==1.5.1",
     ],
+    tests_require=(
+        'django-setuptest==0.1.2',
+    ),
+    test_suite='setuptest.setuptest.SetupTestSuite',
 )
