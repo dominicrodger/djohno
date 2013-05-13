@@ -11,10 +11,10 @@ from .views import (
 
 urlpatterns = patterns(
     '',
-    url(r'^$', index_view),
-    url(r'^400/$', test_400),
-    url(r'^403/$', test_403),
-    url(r'^404/$', test_404),
-    url(r'^500/$', test_500),
-    url(r'^email/$', test_email),
+    url(r'^$', index_view, name='djohno_index'),
+    url(r'^400/$', test_400, name='djohno_400'),
+    url(r'^403/$', test_403, name='djohno_403'),
+    url(r'^404/$', test_404, name='djohno_404'),
+    url(r'^500/$', test_500, name='djohno_500'),
+    url(r'^email/$', test_email, name='djohno_email'),
 )
