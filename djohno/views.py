@@ -3,6 +3,7 @@ from django.http import (
     HttpResponseBadRequest,
     HttpResponseForbidden,
     HttpResponseNotFound,
+    HttpResponseNotAllowed,
     HttpResponseServerError
 )
 
@@ -34,6 +35,17 @@ test_403 = Test403View.as_view()
 class Test404View(BaseExceptionView):
     response_class = HttpResponseNotFound
 test_404 = Test404View.as_view()
+
+
+class HttpResponseGetsOnly(HttpResponseNotAllowed):
+    def __init__(self, *args, **kwargs):
+        super(HttpResponseGetsOnly,
+              self).__init__(['GET', ], *args, **kwargs)
+
+
+class Test405View(BaseExceptionView):
+    response_class = HttpResponseGetsOnly
+test_405 = Test405View.as_view()
 
 
 class Test500View(BaseExceptionView):
