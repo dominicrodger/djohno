@@ -1,11 +1,27 @@
-from django.views.generic import TemplateView, View
-from django.http import (
-    HttpResponseBadRequest,
-    HttpResponseForbidden,
-    HttpResponseNotFound,
-    HttpResponseNotAllowed,
-    HttpResponseServerError
+from django.conf.urls import (
+    handler403,
+    handler404,
+    handler500
 )
+from django.utils.importlib import import_module
+from django.views.generic import TemplateView, View
+
+
+def _imported_symbol(import_path):
+    """Resolve a dotted path into a symbol, and return that.
+
+    For example...
+
+    >>> _imported_symbol('django.db.models.Model')
+    <class 'django.db.models.base.Model'>
+
+    Raise ImportError if there's no such module, AttributeError if no
+    such symbol.
+
+    """
+    module_name, symbol_name = import_path.rsplit('.', 1)
+    module = import_module(module_name)
+    return getattr(module, symbol_name)
 
 
 class IndexView(TemplateView):
@@ -14,42 +30,24 @@ index_view = IndexView.as_view()
 
 
 class BaseExceptionView(View):
-    response_class = None
+    response_func = None
 
     def get(self, request, *args, **kwargs):
-        if self.response_class is None:
-            pass
-        return self.response_class()
-
-
-class Test400View(BaseExceptionView):
-    response_class = HttpResponseBadRequest
-test_400 = Test400View.as_view()
+        return _imported_symbol(self.response_func)(request)
 
 
 class Test403View(BaseExceptionView):
-    response_class = HttpResponseForbidden
+    response_func = handler403
 test_403 = Test403View.as_view()
 
 
 class Test404View(BaseExceptionView):
-    response_class = HttpResponseNotFound
+    response_func = handler404
 test_404 = Test404View.as_view()
 
 
-class HttpResponseGetsOnly(HttpResponseNotAllowed):
-    def __init__(self, *args, **kwargs):
-        super(HttpResponseGetsOnly,
-              self).__init__(['GET', ], *args, **kwargs)
-
-
-class Test405View(BaseExceptionView):
-    response_class = HttpResponseGetsOnly
-test_405 = Test405View.as_view()
-
-
 class Test500View(BaseExceptionView):
-    response_class = HttpResponseServerError
+    response_func = handler500
 test_500 = Test500View.as_view()
 
 

@@ -1,8 +1,11 @@
 #djohno_nav {
-    position: fixed;
+    position: absolute;
     width: 100%;
     background-color: #111;
     height: 55px;
+    opacity: 0.8;
+    top: 0;
+    left: 0;
 }
 
 #djohno_nav ul {
@@ -30,31 +33,4 @@
 
 #djohno_nav li:hover {
     background-color: #0088cc;
-}
-
-body.djohno {
-    margin: 0;
-    padding: 0;
-}
-
-body.djohno * {
-    padding: 0;
-    margin: 0;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-}
-
-body.djohno .content {
-    padding: 70px 50px 0 50px;
-}
-
-body.djohno .content h1 {
-  font-size: 36px;
-  line-height: 40px;
-}
-
-body.djohno .content p {
-  margin-bottom: 20px;
-  font-size: 21px;
-  font-weight: 200;
-  line-height: 30px;
 }

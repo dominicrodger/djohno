@@ -9,6 +9,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'djohno.middleware.DjohnoMiddleware',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
@@ -35,3 +36,5 @@ PASSWORD_HASHERS = (
 )
 
 SITE_ID = 1
+
+DEBUG = False

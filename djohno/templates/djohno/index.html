@@ -1,26 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <title>Djohno Error Check</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
+{% extends "djohno/base.html" %}
 
-  </head>
-  <body class="djohno">
-    {% include "djohno/_djohno_dose.html" %}
+{% block content %}
+  <strong>Hey!</strong>
 
-    <div class="content">
-      <h1>Djohno</h1>
-      <p id="djohno_welcome">
-        <strong>Hey!</strong>
-
-        This is a quick tool for testing your site is set up to respond
-        to various error statuses correctly. To get started, use the
-        links above.
-      </p>
-    </div>
-  </body>
-</html>
-
+  This is a quick tool for testing your site is set up to respond
+  to various error statuses correctly. To get started, use the
+  links above.
+{% endblock %}
