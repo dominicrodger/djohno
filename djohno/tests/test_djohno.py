@@ -76,6 +76,10 @@ class SimpleTest(TestCase):
             self.assertTemplateUsed(response, '500.html')
             self.assertTemplateUsed(response, 'djohno/_djohno_dose.html')
 
+    def test_redirects_in_middleware_work(self):
+        response = self.client.get('/403')
+        self.assertEqual(response.status_code, 301)
+
     def test_regular_403_with_login_does_not_show_djohno(self):
         with login_superuser(self.client):
             url = reverse('regular_403')
