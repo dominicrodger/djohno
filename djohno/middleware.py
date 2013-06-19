@@ -3,8 +3,6 @@ from django.core.urlresolvers import reverse
 from django.template.loader import render_to_string
 from django.utils.encoding import smart_unicode
 
-_HTML_TYPES = ('text/html', 'application/xhtml+xml')
-
 
 def replace_insensitive(string, target, replacement):
     """
@@ -22,22 +20,25 @@ class DjohnoMiddleware(object):
                                 {'STATIC_URL': settings.STATIC_URL})
 
     def should_process_response(self, request, response):
-        if not request.user.is_superuser:
+        if not hasattr(request, 'user'):
+            # We get here if middleware issues a redirect before the
+            # AuthenticationMiddleware has run (e.g. to append a
+            # slash). Since we can't check if the user is allowed to
+            # view Djohno pages at this point, we'll just assume they
+            # can't.
             return False
 
-        if response.streaming:
+        if not request.user.is_superuser:
+            # If your name's not down, you're not coming in.
             return False
 
         if not request.path.startswith(reverse('djohno_index')):
+            # We only want to show the Djohno toolbar for URLs within
+            # the Djohno app.
             return False
 
         if 'gzip' in response.get('Content-Encoding', ''):
-            return False
-
-        content_type = response.get('Content-Type',
-                                    '').split(';')[0]
-
-        if content_type not in _HTML_TYPES:
+            # If it's gzipped, I can't help you.
             return False
 
         return True
