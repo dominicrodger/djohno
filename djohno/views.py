@@ -3,8 +3,10 @@ from django.conf.urls import (
     handler404,
     handler500
 )
+from django.core.exceptions import PermissionDenied
+from django.shortcuts import render
 from django.utils.importlib import import_module
-from django.views.generic import TemplateView, View
+from django.views.generic import View
 
 
 def _imported_symbol(import_path):
@@ -24,8 +26,11 @@ def _imported_symbol(import_path):
     return getattr(module, symbol_name)
 
 
-class IndexView(TemplateView):
-    template_name = 'djohno/index.html'
+class IndexView(View):
+    def get(self, request, *args, **kwargs):
+        if not request.user.is_superuser:
+            raise PermissionDenied
+        return render(request, 'djohno/index.html')
 index_view = IndexView.as_view()
 
 
@@ -33,6 +38,8 @@ class BaseExceptionView(View):
     response_func = None
 
     def get(self, request, *args, **kwargs):
+        if not request.user.is_superuser:
+            raise PermissionDenied
         return _imported_symbol(self.response_func)(request)
 
 

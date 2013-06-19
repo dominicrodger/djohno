@@ -27,6 +27,9 @@ class DjohnoMiddleware(object):
                                 {'STATIC_URL': settings.STATIC_URL})
 
     def process_response(self, request, response):
+        if not request.user.is_superuser:
+            return response
+
         if 'gzip' in response.get('Content-Encoding', ''):
             return response
 
