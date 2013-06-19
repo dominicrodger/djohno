@@ -29,7 +29,7 @@ INSTALLED_APPS = (
     'djohno',
 )
 
-ROOT_URLCONF = 'test_urls'
+ROOT_URLCONF = 'djohno.tests.urls'
 
 PASSWORD_HASHERS = (
     'django.contrib.auth.hashers.MD5PasswordHasher',
