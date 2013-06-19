@@ -75,3 +75,27 @@ class SimpleTest(TestCase):
             self.assertEqual(response.status_code, 500)
             self.assertTemplateUsed(response, '500.html')
             self.assertTemplateUsed(response, 'djohno/_djohno_dose.html')
+
+    def test_regular_403_with_login_does_not_show_djohno(self):
+        with login_superuser(self.client):
+            url = reverse('regular_403')
+            response = self.client.get(url)
+            self.assertEqual(response.status_code, 403)
+            self.assertTemplateUsed(response, '403.html')
+            self.assertTemplateNotUsed(response, 'djohno/_djohno_dose.html')
+
+    def test_regular_404_with_login_does_not_show_djohno(self):
+        with login_superuser(self.client):
+            url = reverse('regular_404')
+            response = self.client.get(url)
+            self.assertEqual(response.status_code, 404)
+            self.assertTemplateUsed(response, '404.html')
+            self.assertTemplateNotUsed(response, 'djohno/_djohno_dose.html')
+
+    def test_regular_500_with_login_does_not_show_djohno(self):
+        with login_superuser(self.client):
+            url = reverse('regular_500')
+            response = self.client.get(url)
+            self.assertEqual(response.status_code, 500)
+            self.assertTemplateUsed(response, '500.html')
+            self.assertTemplateNotUsed(response, 'djohno/_djohno_dose.html')
