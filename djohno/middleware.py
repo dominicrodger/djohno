@@ -31,6 +31,9 @@ class DjohnoMiddleware(object):
         if not request.user.is_superuser:
             return False
 
+        if response.streaming:
+            return False
+
         if not request.path.startswith(reverse('djohno_index')):
             return False
 
