@@ -17,8 +17,6 @@ def replace_insensitive(string, target, replacement):
 
 
 class DjohnoMiddleware(object):
-    tag = '</body>'
-
     def get_djohno(self):
         return render_to_string('djohno/_djohno_dose.html',
                                 {'STATIC_URL': settings.STATIC_URL})
@@ -48,10 +46,12 @@ class DjohnoMiddleware(object):
         if not self.should_process_response(request, response):
             return response
 
+        tag = '</body>'
+
         response.content = replace_insensitive(
             smart_unicode(response.content),
-            self.tag,
-            smart_unicode(self.get_djohno() + self.tag)
+            tag,
+            smart_unicode(self.get_djohno() + tag)
         )
 
         if 'Content-Length' in response:
