@@ -12,12 +12,8 @@ def replace_insensitive(string, target, replacement):
     from Django Debug Toolbar.
     """
     no_case = string.lower()
-    index = no_case.rfind(target.lower())
-    if index >= 0:
-        return string[:index] + replacement + string[index + len(target):]
-
-    # no results so return the original string
-    return string
+    index = no_case.index(target.lower())
+    return string[:index] + replacement + string[index + len(target):]
 
 
 class DjohnoMiddleware(object):
