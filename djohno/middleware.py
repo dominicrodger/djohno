@@ -27,20 +27,26 @@ class DjohnoMiddleware(object):
         return render_to_string('djohno/_djohno_dose.html',
                                 {'STATIC_URL': settings.STATIC_URL})
 
-    def process_response(self, request, response):
+    def should_process_response(self, request, response):
         if not request.user.is_superuser:
-            return response
+            return False
 
         if not request.path.startswith(reverse('djohno_index')):
-            return response
+            return False
 
         if 'gzip' in response.get('Content-Encoding', ''):
-            return response
+            return False
 
         content_type = response.get('Content-Type',
                                     '').split(';')[0]
 
         if content_type not in _HTML_TYPES:
+            return False
+
+        return True
+
+    def process_response(self, request, response):
+        if not self.should_process_response(request, response):
             return response
 
         response.content = replace_insensitive(
