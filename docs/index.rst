@@ -1,0 +1,53 @@
+Welcome to djohno's documentation!
+==================================
+
+djohno is a reusable Django app for ensuring your error views and
+templates work properly. djohno adds a few views which intentionally
+trigger HTTP 403, HTTP 404 and HTTP 500 responses. These views are
+only available to users with superuser access.
+
+``djohno`` also adds default ``403.html``, ``404.html`` and
+``500.html`` templates, which you should override.
+
+Installation
+------------
+
+djohno is available for install from PyPI::
+
+    pip install djohno
+
+Once it's in your virtualenv, add it to your ``INSTALLED_APPS``::
+
+    INSTALLED_APPS = (
+        ...
+        'djohno',
+    )
+
+You'll also need to activate djohno's middleware (to render djohno's
+navigation templates), by adding it to ``MIDDLEWARE_CLASSES``::
+
+    MIDDLEWARE_CLASSES = (
+        ...
+        'djohno.middleware.DjohnoMiddleware',
+    )
+
+.. note::
+
+   You don't technically *need* to add djohno's middleware to
+   ``MIDDLEWARE_CLASSES`` - it just adds links to the test pages within
+   djohno itself.
+
+
+Finally, add djohno to your ``urls.py``::
+
+    urlpatterns = patterns(
+        '',
+        ...
+        url(r'^djohno/', include('djohno.urls')),
+    )
+
+Usage
+-----
+
+Once installed, simply visit ``djohno/`` in your browser, and try the
+links to the 403, 404 and 500 pages.
