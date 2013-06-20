@@ -37,14 +37,17 @@ navigation templates), by adding it to ``MIDDLEWARE_CLASSES``::
    ``MIDDLEWARE_CLASSES`` - it just adds links to the test pages within
    djohno itself.
 
-
-Finally, add djohno to your ``urls.py``::
+Add djohno to your ``urls.py``::
 
     urlpatterns = patterns(
         '',
         ...
         url(r'^djohno/', include('djohno.urls')),
     )
+
+Finally, you'll need to deploy djohno's static files, with::
+
+    python manage.py collectstatic
 
 Usage
 -----
