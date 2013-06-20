@@ -1,0 +1,23 @@
+{% extends "djohno/base.html" %}
+
+{% block content %}
+  {% if sent_successfully %}
+    <p>
+      <strong>Email sent!</strong>
+      An email was successfully sent to <strong>{{ email }}</strong>,
+      but you might want to check that you received it.
+    </p>
+  {% else %}
+    <p>
+      <strong>Email failed to send.</strong>
+      I tried to send an email to <strong>{{ email }}</strong>,
+      but sending the email failed.
+    </p>
+
+    <p>
+      The error message provided was:
+      <code>{{ error }}</code>
+    </p>
+  {% endif %}
+
+{% endblock %}

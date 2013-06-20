@@ -4,9 +4,12 @@ from django.conf.urls import (
     handler500
 )
 from django.core.exceptions import PermissionDenied
+from django.core.mail import send_mail
 from django.shortcuts import render
 from django.utils.importlib import import_module
 from django.views.generic import View
+import socket
+from smtplib import SMTPException
 
 
 def _imported_symbol(import_path):
@@ -59,5 +62,28 @@ test_500 = Test500View.as_view()
 
 
 class TestEmailView(View):
-    pass
+    def get(self, request, *args, **kwargs):
+        if not request.user.is_superuser:
+            raise PermissionDenied
+
+        error = None
+
+        try:
+            send_mail('djohno email test',
+                      'Here is the message.',
+                      'from@example.com',
+                      [request.user.email, ],
+                      fail_silently=False)
+            sent_successfully = True
+        except SMTPException as e:
+            sent_successfully = False
+            error = e
+        except socket.error as e:
+            sent_successfully = False
+            error = e
+
+        return render(request, 'djohno/email.html',
+                      {'email': request.user.email,
+                       'sent_successfully': sent_successfully,
+                       'error': error})
 test_email = TestEmailView.as_view()
