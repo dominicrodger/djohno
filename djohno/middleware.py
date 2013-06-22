@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.template.loader import render_to_string
-from django.utils.encoding import smart_unicode
+from django.utils.encoding import smart_str
 
 
 def replace_insensitive(string, target, replacement):
@@ -11,6 +11,7 @@ def replace_insensitive(string, target, replacement):
     """
     no_case = string.lower()
     index = no_case.index(target.lower())
+
     return string[:index] + replacement + string[index + len(target):]
 
 
@@ -50,9 +51,9 @@ class DjohnoMiddleware(object):
         tag = '</body>'
 
         response.content = replace_insensitive(
-            smart_unicode(response.content),
+            smart_str(response.content),
             tag,
-            smart_unicode(self.get_djohno() + tag)
+            smart_str(self.get_djohno() + tag)
         )
 
         if 'Content-Length' in response:
