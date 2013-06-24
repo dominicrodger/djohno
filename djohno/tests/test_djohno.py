@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from contextlib import contextmanager
 from django.test import TestCase
 from django.contrib.auth.models import User
@@ -152,6 +153,7 @@ class SimpleTest(TestCase):
             response = self.client.get(url)
             self.assertEqual(response.status_code, 200)
             self.assertTemplateNotUsed(response, 'djohno/_djohno_dose.html')
+            self.assertContains(response, '☃')
 
     def test_regular_403_with_login_does_not_show_djohno(self):
         with login_superuser(self.client):
