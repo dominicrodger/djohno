@@ -1,1 +1,2 @@
 recursive-include djohno/templates *
+recursive-include djohno/static *
