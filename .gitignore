@@ -5,3 +5,4 @@ coverage.xml
 pep8.txt
 *.egg/
 docs/_build/
+dist/
