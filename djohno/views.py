@@ -35,30 +35,36 @@ class BaseFrameView(View):
         if not request.user.is_superuser:
             raise PermissionDenied
         return render(request, 'djohno/frame.html',
-                      {'frame_url': self.frame_url})
+                      {'frame_url': self.frame_url,
+                       'title': self.title})
 
 
 class FrameView(BaseFrameView):
+    title = 'Djohno: Home'
     frame_url = reverse_lazy('djohno_index')
 frame_view = FrameView.as_view()
 
 
 class Frame403View(BaseFrameView):
+    title = 'Djohno: 403 Check'
     frame_url = reverse_lazy('djohno_403')
 frame_403_view = Frame403View.as_view()
 
 
 class Frame404View(BaseFrameView):
+    title = 'Djohno: 404 Check'
     frame_url = reverse_lazy('djohno_404')
 frame_404_view = Frame404View.as_view()
 
 
 class Frame500View(BaseFrameView):
+    title = 'Djohno: 500 Check'
     frame_url = reverse_lazy('djohno_500')
 frame_500_view = Frame500View.as_view()
 
 
 class FrameEmailView(BaseFrameView):
+    title = 'Djohno: Email Check'
     frame_url = reverse_lazy('djohno_email')
 frame_email_view = FrameEmailView.as_view()
 

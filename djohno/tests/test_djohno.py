@@ -63,7 +63,7 @@ class SimpleTest(TestCase):
             url = reverse('djohno_frame')
             response = self.client.get(url)
             self.assertEqual(response.status_code, 200)
-            self.assertContains(response, 'Djohno Error Check')
+            self.assertContains(response, 'Djohno: Home')
             self.assertContains(response,
                                 'src="%s"' % reverse('djohno_index'))
 
@@ -72,7 +72,7 @@ class SimpleTest(TestCase):
             url = reverse('djohno_frame_403')
             response = self.client.get(url)
             self.assertEqual(response.status_code, 200)
-            self.assertContains(response, 'Djohno Error Check')
+            self.assertContains(response, 'Djohno: 403 Check')
             self.assertContains(response,
                                 'src="%s"' % reverse('djohno_403'))
 
@@ -81,7 +81,7 @@ class SimpleTest(TestCase):
             url = reverse('djohno_frame_404')
             response = self.client.get(url)
             self.assertEqual(response.status_code, 200)
-            self.assertContains(response, 'Djohno Error Check')
+            self.assertContains(response, 'Djohno: 404 Check')
             self.assertContains(response,
                                 'src="%s"' % reverse('djohno_404'))
 
@@ -90,7 +90,7 @@ class SimpleTest(TestCase):
             url = reverse('djohno_frame_500')
             response = self.client.get(url)
             self.assertEqual(response.status_code, 200)
-            self.assertContains(response, 'Djohno Error Check')
+            self.assertContains(response, 'Djohno: 500 Check')
             self.assertContains(response,
                                 'src="%s"' % reverse('djohno_500'))
 
@@ -99,7 +99,7 @@ class SimpleTest(TestCase):
             url = reverse('djohno_frame_email')
             response = self.client.get(url)
             self.assertEqual(response.status_code, 200)
-            self.assertContains(response, 'Djohno Error Check')
+            self.assertContains(response, 'Djohno: Email Check')
             self.assertContains(response,
                                 'src="%s"' % reverse('djohno_email'))
 
