@@ -5,6 +5,7 @@ from django.conf.urls import (
 )
 from django.core.exceptions import PermissionDenied
 from django.core.mail import send_mail
+from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import render
 from django.utils.importlib import import_module
 from django.views.generic import View
@@ -30,10 +31,13 @@ def _imported_symbol(import_path):
 
 
 class FrameView(View):
+    frame_url = reverse_lazy('djohno_index')
+
     def get(self, request, *args, **kwargs):
         if not request.user.is_superuser:
             raise PermissionDenied
-        return render(request, 'djohno/frame.html')
+        return render(request, 'djohno/frame.html',
+                      {'frame_url': self.frame_url})
 frame_view = FrameView.as_view()
 
 

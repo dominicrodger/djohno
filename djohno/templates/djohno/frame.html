@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-{% load url from future %}
 <html lang="en">
   <head>
     <meta charset="utf-8" />
@@ -11,7 +10,7 @@
   </head>
   <body>
     {% include "djohno/_djohno_dose.html" %}
-    <iframe src="{% url "djohno_index" %}" width="100%" frameborder="0" name="djohno_frame" />
+    <iframe src="{{ frame_url }}" width="100%" frameborder="0" name="djohno_frame" />
   </body>
 </html>
 
