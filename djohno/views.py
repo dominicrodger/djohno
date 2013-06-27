@@ -29,6 +29,14 @@ def _imported_symbol(import_path):
     return getattr(module, symbol_name)
 
 
+class FrameView(View):
+    def get(self, request, *args, **kwargs):
+        if not request.user.is_superuser:
+            raise PermissionDenied
+        return render(request, 'djohno/frame.html')
+frame_view = FrameView.as_view()
+
+
 class IndexView(View):
     def get(self, request, *args, **kwargs):
         if not request.user.is_superuser:

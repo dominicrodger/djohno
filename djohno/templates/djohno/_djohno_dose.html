@@ -1,21 +1,20 @@
 {% load url from future %}
 <div id="djohno_nav">
-  <link rel="stylesheet" type="text/css" media="all" href="{{ STATIC_URL }}djohno/style.css" />
   <ul>
     <li>
-      <a href="{% url 'djohno_index' %}" title="Djohno home">Home</a>
+      <a href="{% url 'djohno_index' %}" target="djohno_frame" title="Djohno home">Home</a>
     </li>
     <li>
-      <a href="{% url 'djohno_403' %}" title="Djohno 403">403</a>
+      <a href="{% url 'djohno_403' %}" target="djohno_frame" title="Djohno 403">403</a>
     </li>
     <li>
-      <a href="{% url 'djohno_404' %}" title="Djohno 404">404</a>
+      <a href="{% url 'djohno_404' %}" target="djohno_frame" title="Djohno 404">404</a>
     </li>
     <li>
-      <a href="{% url 'djohno_500' %}" title="Djohno 500">500</a>
+      <a href="{% url 'djohno_500' %}" target="djohno_frame" title="Djohno 500">500</a>
     </li>
     <li>
-      <a href="{% url 'djohno_email' %}" title="Test email integration">Mail</a>
+      <a href="{% url 'djohno_email' %}" target="djohno_frame" title="Test email integration">Mail</a>
     </li>
   </ul>
 </div>

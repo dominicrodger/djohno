@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% load url from future %}
 <html lang="en">
   <head>
     <meta charset="utf-8" />
@@ -6,16 +7,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <link rel="stylesheet" type="text/css" media="all" href="{{ STATIC_URL }}djohno/djohno_pages.css" />
+    <link rel="stylesheet" type="text/css" media="all" href="{{ STATIC_URL }}djohno/style.css" />
   </head>
   <body>
-    <div class="content">
-      <h1>Djohno</h1>
-      <p id="djohno_welcome">
-        {% block content %}
-        {% endblock %}
-      </p>
-    </div>
+    {% include "djohno/_djohno_dose.html" %}
+    <iframe src="{% url "djohno_index" %}" width="100%" frameborder="0" name="djohno_frame" />
   </body>
 </html>
 

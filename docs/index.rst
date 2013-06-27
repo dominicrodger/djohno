@@ -25,20 +25,6 @@ Once it's in your virtualenv, add it to your ``INSTALLED_APPS``::
         'djohno',
     )
 
-You'll also need to activate djohno's middleware (to render djohno's
-navigation templates), by adding it to ``MIDDLEWARE_CLASSES``::
-
-    MIDDLEWARE_CLASSES = (
-        ...
-        'djohno.middleware.DjohnoMiddleware',
-    )
-
-.. note::
-
-   You don't technically *need* to add djohno's middleware to
-   ``MIDDLEWARE_CLASSES`` - it just adds links to the test pages within
-   djohno itself.
-
 Add djohno to your ``urls.py``::
 
     urlpatterns = patterns(
@@ -55,4 +41,4 @@ Usage
 -----
 
 Once installed, simply visit ``djohno/`` in your browser, and try the
-links to the 403, 404 and 500 pages.
+links to the 403, 404, 500 and mail integration pages.
