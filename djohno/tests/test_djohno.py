@@ -63,6 +63,9 @@ class SimpleTest(TestCase):
             url = reverse('djohno_frame')
             response = self.client.get(url)
             self.assertEqual(response.status_code, 200)
+            self.assertContains(response, 'Djohno Error Check')
+            self.assertContains(response,
+                                'src="%s"' % reverse('djohno_index'))
 
     def test_djohno_index_with_login(self):
         with login_superuser(self.client):
