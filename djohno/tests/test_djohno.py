@@ -67,6 +67,42 @@ class SimpleTest(TestCase):
             self.assertContains(response,
                                 'src="%s"' % reverse('djohno_index'))
 
+    def test_djohno_403_frame_with_login(self):
+        with login_superuser(self.client):
+            url = reverse('djohno_frame_403')
+            response = self.client.get(url)
+            self.assertEqual(response.status_code, 200)
+            self.assertContains(response, 'Djohno Error Check')
+            self.assertContains(response,
+                                'src="%s"' % reverse('djohno_403'))
+
+    def test_djohno_404_frame_with_login(self):
+        with login_superuser(self.client):
+            url = reverse('djohno_frame_404')
+            response = self.client.get(url)
+            self.assertEqual(response.status_code, 200)
+            self.assertContains(response, 'Djohno Error Check')
+            self.assertContains(response,
+                                'src="%s"' % reverse('djohno_404'))
+
+    def test_djohno_500_frame_with_login(self):
+        with login_superuser(self.client):
+            url = reverse('djohno_frame_500')
+            response = self.client.get(url)
+            self.assertEqual(response.status_code, 200)
+            self.assertContains(response, 'Djohno Error Check')
+            self.assertContains(response,
+                                'src="%s"' % reverse('djohno_500'))
+
+    def test_djohno_email_frame_with_login(self):
+        with login_superuser(self.client):
+            url = reverse('djohno_frame_email')
+            response = self.client.get(url)
+            self.assertEqual(response.status_code, 200)
+            self.assertContains(response, 'Djohno Error Check')
+            self.assertContains(response,
+                                'src="%s"' % reverse('djohno_email'))
+
     def test_djohno_index_with_login(self):
         with login_superuser(self.client):
             url = reverse('djohno_index')

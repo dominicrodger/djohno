@@ -30,15 +30,37 @@ def _imported_symbol(import_path):
     return getattr(module, symbol_name)
 
 
-class FrameView(View):
-    frame_url = reverse_lazy('djohno_index')
-
+class BaseFrameView(View):
     def get(self, request, *args, **kwargs):
         if not request.user.is_superuser:
             raise PermissionDenied
         return render(request, 'djohno/frame.html',
                       {'frame_url': self.frame_url})
+
+
+class FrameView(BaseFrameView):
+    frame_url = reverse_lazy('djohno_index')
 frame_view = FrameView.as_view()
+
+
+class Frame403View(BaseFrameView):
+    frame_url = reverse_lazy('djohno_403')
+frame_403_view = Frame403View.as_view()
+
+
+class Frame404View(BaseFrameView):
+    frame_url = reverse_lazy('djohno_404')
+frame_404_view = Frame404View.as_view()
+
+
+class Frame500View(BaseFrameView):
+    frame_url = reverse_lazy('djohno_500')
+frame_500_view = Frame500View.as_view()
+
+
+class FrameEmailView(BaseFrameView):
+    frame_url = reverse_lazy('djohno_email')
+frame_email_view = FrameEmailView.as_view()
 
 
 class IndexView(View):
