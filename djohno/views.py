@@ -8,6 +8,7 @@ from django.core.exceptions import PermissionDenied
 from django.core.mail import send_mail
 from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import render
+from django.template.loader import render_to_string
 from django.utils.importlib import import_module
 from django.views.generic import View
 import socket
@@ -107,11 +108,13 @@ class TestEmailView(View):
         if not request.user.is_superuser:
             raise PermissionDenied
 
+        message = render_to_string('djohno/email_body.txt')
+
         error = None
 
         try:
             send_mail('djohno email test',
-                      'Here is the message.',
+                      message,
                       settings.DEFAULT_FROM_EMAIL,
                       [request.user.email, ],
                       fail_silently=False)

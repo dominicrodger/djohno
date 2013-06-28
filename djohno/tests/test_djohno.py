@@ -140,6 +140,7 @@ class SimpleTest(TestCase):
             self.assertEqual(len(mail.outbox), 1)
             sent = mail.outbox[0]
             self.assertEqual(sent.subject, 'djohno email test')
+            self.assertTrue(sent.body.find('Congratulations') != -1)
             self.assertEqual(len(sent.to), 1)
             self.assertEqual(sent.to[0], 'foo@example.com')
             self.assertContains(response, "successfully sent")

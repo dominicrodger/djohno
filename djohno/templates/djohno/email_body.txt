@@ -1,0 +1,11 @@
+Congratulations!
+
+If you're reading this, you've got email configured correctly. You
+might want to check the "From" section of this email to make sure it
+looks OK.
+
+It's probably a good idea to set DEFAULT_FROM_EMAIL to something like
+"Company Name <info@example.com>", so most email clients will display
+it as coming from "Company Name" rather than just "info@example.com".
+
+djohno
