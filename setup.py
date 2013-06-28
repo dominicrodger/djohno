@@ -5,8 +5,8 @@ import djohno
 setup(
     name='djohno',
     version=djohno.__version__,
-    description="I'll fill this in later.",
-    long_description="I'll fill this in later too.",
+    description="A tiny Django app for checking over your error pages.",
+    long_description=open('README.rst').read(),
     author='Dominic Rodger',
     author_email='internet@dominicrodger.com',
     url='http://github.com/dominicrodger/djohno',
