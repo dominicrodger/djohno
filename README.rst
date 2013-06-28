@@ -1,4 +1,5 @@
-# djohno
+djohno
+======
 
 djohno is a tiny app for checking over your error pages, and email
 integration - to stop me doing evil things post-production to ensure
