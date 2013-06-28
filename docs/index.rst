@@ -25,7 +25,22 @@ Once it's in your virtualenv, add it to your ``INSTALLED_APPS``::
         'djohno',
     )
 
-Add djohno to your ``urls.py``::
+.. note::
+
+   It's important to make sure ``djohno`` is listed after all other
+   apps which have templates you care about, since djohno includes
+   some templates that aren't scoped to a ``djohno`` subdirectory
+   (namely, ``403.html``, ``404.html``, ``500.html``). You should have
+   other apps (or perhaps templates in ``TEMPLATE_DIRS``) which
+   provide those templates, so ensure those apps are listed **before**
+   ``djohno``. If you're using templates for ``403.html`` et al in
+   ``TEMPLATE_DIRS``, make sure
+   ``'django.template.loaders.filesystem.Loader'`` is listed before
+   ``'django.template.loaders.app_directories.Loader'`` in your
+   ``TEMPLATE_DIRS`` setting.
+
+Once you've added ``djohno`` to your ``INSTALLED_APPS`, add djohno to
+your ``urls.py``::
 
     urlpatterns = patterns(
         '',
