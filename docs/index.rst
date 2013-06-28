@@ -42,3 +42,10 @@ Usage
 
 Once installed, simply visit ``djohno/`` in your browser, and try the
 links to the 403, 404, 500 and mail integration pages.
+
+Supported Python and Django versions
+------------------------------------
+
+Currently, djohno supports Django 1.4 and 1.5. Python 2.6 and 2.7 are
+supported for Django 1.4 and 1.5, and Python 3.3 is supported for
+Django 1.5.
