@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.core import mail
 from django.core.urlresolvers import reverse
 from django.test import TestCase
+from django.test.utils import override_settings
 import socket
 from mock import Mock, patch
 from smtplib import SMTPConnectError
@@ -129,6 +130,7 @@ class SimpleTest(TestCase):
             self.assertEqual(response.status_code, 500)
             self.assertTemplateUsed(response, '500.html')
 
+    @override_settings(DEFAULT_FROM_EMAIL='Foobar <foo@bar.com>')
     def test_mail_view(self):
         with login_superuser(self.client):
             url = reverse('djohno_email')
@@ -142,6 +144,7 @@ class SimpleTest(TestCase):
             self.assertEqual(sent.to[0], 'foo@example.com')
             self.assertContains(response, "successfully sent")
             self.assertContains(response, "foo@example.com")
+            self.assertContains(response, "Foobar &lt;foo@bar.com&gt;")
 
     def test_mail_view_smtp_failure(self):
         def fake_send_mail(subject, message,

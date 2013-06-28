@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.conf.urls import (
     handler403,
     handler404,
@@ -111,7 +112,7 @@ class TestEmailView(View):
         try:
             send_mail('djohno email test',
                       'Here is the message.',
-                      'from@example.com',
+                      settings.DEFAULT_FROM_EMAIL,
                       [request.user.email, ],
                       fail_silently=False)
             sent_successfully = True
@@ -124,6 +125,7 @@ class TestEmailView(View):
 
         return render(request, 'djohno/email.html',
                       {'email': request.user.email,
+                       'from_email': settings.DEFAULT_FROM_EMAIL,
                        'sent_successfully': sent_successfully,
                        'error': error})
 test_email = TestEmailView.as_view()

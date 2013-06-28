@@ -4,8 +4,10 @@
   {% if sent_successfully %}
     <p>
       <strong>Email sent!</strong>
+
       An email was successfully sent to <strong>{{ email }}</strong>,
-      but you might want to check that you received it.
+      from <strong>{{ from_email }}</strong>, but you might want to
+      check that you received it.
     </p>
   {% else %}
     <p>
