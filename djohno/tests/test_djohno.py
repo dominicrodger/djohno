@@ -1,8 +1,8 @@
 from contextlib import contextmanager
-from django.test import TestCase
 from django.contrib.auth.models import User
 from django.core import mail
 from django.core.urlresolvers import reverse
+from django.test import TestCase
 import socket
 from mock import Mock, patch
 from smtplib import SMTPConnectError
