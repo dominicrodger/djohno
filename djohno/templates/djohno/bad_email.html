@@ -1,0 +1,15 @@
+{% extends "djohno/base.html" %}
+
+{% block content %}
+  <p>
+    <strong>Configuration Error!</strong>
+
+  {% if from_email == "webmaster@localhost" %}
+    {% include "djohno/_bad_email_default.html" %}
+  {% else %}
+    {% include "djohno/_bad_email_invalid.html" %}
+  {% endif %}
+  </p>
+
+
+{% endblock %}

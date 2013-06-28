@@ -1,9 +1,11 @@
 from contextlib import contextmanager
 from django.contrib.auth.models import User
 from django.core import mail
+from django.core.exceptions import ValidationError
 from django.core.urlresolvers import reverse
 from django.test import TestCase
 from django.test.utils import override_settings
+from djohno.utils import is_pretty_from_address
 import socket
 from mock import Mock, patch
 from smtplib import SMTPConnectError
@@ -130,8 +132,18 @@ class SimpleTest(TestCase):
             self.assertEqual(response.status_code, 500)
             self.assertTemplateUsed(response, '500.html')
 
+    def test_is_pretty_from_address_fails_on_bare_address(self):
+        self.assertFalse(is_pretty_from_address('foo@bar.com'))
+
+    def test_is_pretty_from_succeeds_on_pretty_address(self):
+        self.assertTrue(is_pretty_from_address('Foo <foo@bar.com>'))
+
+    def test_is_pretty_from_raises_validation_error_on_bad_input(self):
+        with self.assertRaises(ValidationError):
+            self.assertTrue(is_pretty_from_address('hello'))
+
     @override_settings(DEFAULT_FROM_EMAIL='Foobar <foo@bar.com>')
-    def test_mail_view(self):
+    def test_mail_view_complex_from_address(self):
         with login_superuser(self.client):
             url = reverse('djohno_email')
             response = self.client.get(url)
@@ -141,11 +153,58 @@ class SimpleTest(TestCase):
             sent = mail.outbox[0]
             self.assertEqual(sent.subject, 'djohno email test')
             self.assertTrue(sent.body.find('Congratulations') != -1)
+            self.assertEqual(sent.body.find('It\'s probably a good'), -1)
+            self.assertEqual(sent.body.find('\n\n\n'), -1)
             self.assertEqual(len(sent.to), 1)
             self.assertEqual(sent.to[0], 'foo@example.com')
             self.assertContains(response, "successfully sent")
             self.assertContains(response, "foo@example.com")
             self.assertContains(response, "Foobar &lt;foo@bar.com&gt;")
+
+    @override_settings(DEFAULT_FROM_EMAIL='simple@bar.com')
+    def test_mail_view_simple_from_address(self):
+        with login_superuser(self.client):
+            url = reverse('djohno_email')
+            response = self.client.get(url)
+            self.assertEqual(response.status_code, 200)
+            self.assertTemplateUsed(response, 'djohno/email.html')
+            self.assertEqual(len(mail.outbox), 1)
+            sent = mail.outbox[0]
+            self.assertEqual(sent.subject, 'djohno email test')
+            self.assertTrue(sent.body.find('Congratulations') != -1)
+            self.assertNotEqual(sent.body.find('It\'s probably a good'), -1)
+            self.assertEqual(sent.body.find('\n\n\n'), -1)
+            self.assertEqual(len(sent.to), 1)
+            self.assertEqual(sent.to[0], 'foo@example.com')
+            self.assertContains(response, "successfully sent")
+            self.assertContains(response, "foo@example.com")
+            self.assertContains(response, "simple@bar.com")
+
+    @override_settings(DEFAULT_FROM_EMAIL='notanemail')
+    def test_mail_view_invalid_from_address(self):
+        with login_superuser(self.client):
+            url = reverse('djohno_email')
+            response = self.client.get(url)
+            self.assertEqual(response.status_code, 200)
+            self.assertTemplateUsed(response, 'djohno/bad_email.html')
+            self.assertTemplateUsed(response,
+                                    'djohno/_bad_email_invalid.html')
+            self.assertEqual(len(mail.outbox), 0)
+            self.assertContains(response, "no email was sent")
+            self.assertContains(response, "notanemail")
+
+    @override_settings(DEFAULT_FROM_EMAIL='webmaster@localhost')
+    def test_mail_view_default_from_address(self):
+        with login_superuser(self.client):
+            url = reverse('djohno_email')
+            response = self.client.get(url)
+            self.assertEqual(response.status_code, 200)
+            self.assertTemplateUsed(response, 'djohno/bad_email.html')
+            self.assertTemplateUsed(response,
+                                    'djohno/_bad_email_default.html')
+            self.assertEqual(len(mail.outbox), 0)
+            self.assertContains(response, "Your Name")
+            self.assertContains(response, "you@example.com")
 
     def test_mail_view_smtp_failure(self):
         def fake_send_mail(subject, message,

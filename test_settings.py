@@ -37,3 +37,5 @@ PASSWORD_HASHERS = (
 SITE_ID = 1
 
 DEBUG = False
+
+DEFAULT_FROM_EMAIL = 'from@example.com'

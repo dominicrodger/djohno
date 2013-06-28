@@ -4,13 +4,14 @@ from django.conf.urls import (
     handler404,
     handler500
 )
-from django.core.exceptions import PermissionDenied
+from django.core.exceptions import PermissionDenied, ValidationError
 from django.core.mail import send_mail
 from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import render
 from django.template.loader import render_to_string
 from django.utils.importlib import import_module
 from django.views.generic import View
+from djohno.utils import is_pretty_from_address
 import socket
 from smtplib import SMTPException
 
@@ -108,14 +109,22 @@ class TestEmailView(View):
         if not request.user.is_superuser:
             raise PermissionDenied
 
-        message = render_to_string('djohno/email_body.txt')
+        from_address = settings.DEFAULT_FROM_EMAIL
+        try:
+            is_pretty = is_pretty_from_address(from_address)
+        except ValidationError as e:
+            return render(request, 'djohno/bad_email.html',
+                          {'from_email': from_address})
+
+        message = render_to_string('djohno/email_body.txt',
+                                   {'pretty_from': is_pretty})
 
         error = None
 
         try:
             send_mail('djohno email test',
                       message,
-                      settings.DEFAULT_FROM_EMAIL,
+                      from_address,
                       [request.user.email, ],
                       fail_silently=False)
             sent_successfully = True
@@ -128,7 +137,7 @@ class TestEmailView(View):
 
         return render(request, 'djohno/email.html',
                       {'email': request.user.email,
-                       'from_email': settings.DEFAULT_FROM_EMAIL,
+                       'from_email': from_address,
                        'sent_successfully': sent_successfully,
                        'error': error})
 test_email = TestEmailView.as_view()
