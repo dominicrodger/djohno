@@ -10,8 +10,8 @@ site by editing code live.
 Release Notes
 =============
 
-0.1.1 (TBC)
------------
+0.1.1 (29th June 2013)
+----------------------
 
 * Fix the email address the test email is sent from, add checking that
   it's a valid email address, and encourage users to set
