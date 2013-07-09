@@ -1,11 +1,9 @@
 from contextlib import contextmanager
 from django.contrib.auth.models import User
 from django.core import mail
-from django.core.exceptions import ValidationError
 from django.core.urlresolvers import reverse
 from django.test import TestCase
 from django.test.utils import override_settings
-from djohno.utils import is_pretty_from_address
 import socket
 from mock import Mock, patch
 from smtplib import SMTPConnectError
@@ -196,27 +194,6 @@ class SimpleTest(TestCase):
             response = self.client.get(url)
             self.assertEqual(response.status_code, 500)
             self.assertTemplateUsed(response, '500.html')
-
-    def test_is_pretty_from_address_fails_on_bare_address(self):
-        """
-        Ensure normal email addresses aren't parsed as being "pretty".
-        """
-        self.assertFalse(is_pretty_from_address('foo@bar.com'))
-
-    def test_is_pretty_from_succeeds_on_pretty_address(self):
-        """
-        Ensure pretty addresses (e.g. Foo <foo@bar.com>) are parsed as
-        being "pretty".
-        """
-        self.assertTrue(is_pretty_from_address('Foo <foo@bar.com>'))
-
-    def test_is_pretty_from_raises_validation_error_on_bad_input(self):
-        """
-        Ensure invalid email addresses (e.g. "hello") raise
-        ValidationError if given invalid inputs.
-        """
-        with self.assertRaises(ValidationError):
-            self.assertTrue(is_pretty_from_address('hello'))
 
     @override_settings(DEFAULT_FROM_EMAIL='Foobar <foo@bar.com>')
     def test_mail_view_complex_from_address(self):
