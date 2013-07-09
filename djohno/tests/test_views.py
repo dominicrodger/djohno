@@ -16,7 +16,7 @@ def login_superuser(client):
     client.logout()
 
 
-class SimpleTest(TestCase):
+class DjohnoViewTests(TestCase):
     def setUp(self):
         User.objects.create_superuser('admin',
                                       'foo@example.com',

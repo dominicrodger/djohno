@@ -3,7 +3,7 @@ from django.test import TestCase
 from djohno.utils import is_pretty_from_address
 
 
-class DjohnoUtilTest(TestCase):
+class DjohnoUtilTests(TestCase):
     def test_is_pretty_from_address_fails_on_bare_address(self):
         """
         Ensure normal email addresses aren't parsed as being "pretty".
