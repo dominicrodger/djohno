@@ -15,6 +15,8 @@ Release Notes
 
 * Test re-organising (separated view tests and utility tests), added
   test descriptions.
+* Better styles for buttons (based on Flat UI, from
+  http://designmodo.github.io/Flat-UI/).
 
 0.1.1 (29th June 2013)
 ----------------------
