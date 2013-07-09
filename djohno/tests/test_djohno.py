@@ -25,42 +25,70 @@ class SimpleTest(TestCase):
                                       'password')
 
     def test_djohno_frame_403s_without_login(self):
+        """
+        Tests to ensure loading the root djohno view without
+        authenticating results in a 403.
+        """
         url = reverse('djohno_frame')
         response = self.client.get(url)
         self.assertEqual(response.status_code, 403)
         self.assertTemplateUsed(response, '403.html')
 
     def test_djohno_index_403s_without_login(self):
+        """
+        Tests to ensure loading the framed djohno view without
+        authenticating results in a 403.
+        """
         url = reverse('djohno_index')
         response = self.client.get(url)
         self.assertEqual(response.status_code, 403)
         self.assertTemplateUsed(response, '403.html')
 
     def test_djohno_403_403s_without_login(self):
+        """
+        Tests to ensure loading the framed djohno 403 test view
+        without authenticating results in a 403.
+        """
         url = reverse('djohno_403')
         response = self.client.get(url)
         self.assertEqual(response.status_code, 403)
         self.assertTemplateUsed(response, '403.html')
 
     def test_djohno_404_403s_without_login(self):
+        """
+        Tests to ensure loading the framed djohno 404 test view
+        without authenticating results in a 403.
+        """
         url = reverse('djohno_404')
         response = self.client.get(url)
         self.assertEqual(response.status_code, 403)
         self.assertTemplateUsed(response, '403.html')
 
     def test_djohno_500_403s_without_login(self):
+        """
+        Tests to ensure loading the framed djohno 500 test view
+        without authenticating results in a 403.
+        """
         url = reverse('djohno_500')
         response = self.client.get(url)
         self.assertEqual(response.status_code, 403)
         self.assertTemplateUsed(response, '403.html')
 
     def test_djohno_mail_403s_without_login(self):
+        """
+        Tests to ensure loading the framed djohno email test view
+        without authenticating results in a 403.
+        """
         url = reverse('djohno_email')
         response = self.client.get(url)
         self.assertEqual(response.status_code, 403)
         self.assertTemplateUsed(response, '403.html')
 
     def test_djohno_frame_with_login(self):
+        """
+        Tests to ensure loading the djohno frame view is successful,
+        and renders a view specific strings.
+        """
         with login_superuser(self.client):
             url = reverse('djohno_frame')
             response = self.client.get(url)
@@ -70,6 +98,10 @@ class SimpleTest(TestCase):
                                 'src="%s"' % reverse('djohno_index'))
 
     def test_djohno_403_frame_with_login(self):
+        """
+        Tests to ensure loading the djohno framed 403 view is
+        successful, and renders a view specific strings.
+        """
         with login_superuser(self.client):
             url = reverse('djohno_frame_403')
             response = self.client.get(url)
@@ -79,6 +111,10 @@ class SimpleTest(TestCase):
                                 'src="%s"' % reverse('djohno_403'))
 
     def test_djohno_404_frame_with_login(self):
+        """
+        Tests to ensure loading the djohno framed 404 view is
+        successful, and renders a view specific strings.
+        """
         with login_superuser(self.client):
             url = reverse('djohno_frame_404')
             response = self.client.get(url)
@@ -88,6 +124,10 @@ class SimpleTest(TestCase):
                                 'src="%s"' % reverse('djohno_404'))
 
     def test_djohno_500_frame_with_login(self):
+        """
+        Tests to ensure loading the djohno framed 500 view is
+        successful, and renders a view specific strings.
+        """
         with login_superuser(self.client):
             url = reverse('djohno_frame_500')
             response = self.client.get(url)
@@ -97,6 +137,10 @@ class SimpleTest(TestCase):
                                 'src="%s"' % reverse('djohno_500'))
 
     def test_djohno_email_frame_with_login(self):
+        """
+        Tests to ensure loading the djohno framed email test view is
+        successful, and renders a view specific strings.
+        """
         with login_superuser(self.client):
             url = reverse('djohno_frame_email')
             response = self.client.get(url)
@@ -106,12 +150,21 @@ class SimpleTest(TestCase):
                                 'src="%s"' % reverse('djohno_email'))
 
     def test_djohno_index_with_login(self):
+        """
+        Tests to ensure loading the djohno index view is successful.
+        """
         with login_superuser(self.client):
             url = reverse('djohno_index')
             response = self.client.get(url)
             self.assertEqual(response.status_code, 200)
 
     def test_djohno_403_with_login(self):
+        """
+        Tests to ensure loading the djohno 403 test view results in a
+        403, and uses the expected template (this test may break if
+        you've overriden handler403 with a function that doesn't
+        render 403.html).
+        """
         with login_superuser(self.client):
             url = reverse('djohno_403')
             response = self.client.get(url)
@@ -119,6 +172,12 @@ class SimpleTest(TestCase):
             self.assertTemplateUsed(response, '403.html')
 
     def test_djohno_404_with_login(self):
+        """
+        Tests to ensure loading the djohno 404 test view results in a
+        404, and uses the expected template (this test may break if
+        you've overriden handler404 with a function that doesn't
+        render 404.html).
+        """
         with login_superuser(self.client):
             url = reverse('djohno_404')
             response = self.client.get(url)
@@ -126,6 +185,12 @@ class SimpleTest(TestCase):
             self.assertTemplateUsed(response, '404.html')
 
     def test_djohno_500_with_login(self):
+        """
+        Tests to ensure loading the djohno 500 test view results in a
+        500, and uses the expected template (this test may break if
+        you've overriden handler500 with a function that doesn't
+        render 500.html).
+        """
         with login_superuser(self.client):
             url = reverse('djohno_500')
             response = self.client.get(url)
@@ -133,17 +198,32 @@ class SimpleTest(TestCase):
             self.assertTemplateUsed(response, '500.html')
 
     def test_is_pretty_from_address_fails_on_bare_address(self):
+        """
+        Ensure normal email addresses aren't parsed as being "pretty".
+        """
         self.assertFalse(is_pretty_from_address('foo@bar.com'))
 
     def test_is_pretty_from_succeeds_on_pretty_address(self):
+        """
+        Ensure pretty addresses (e.g. Foo <foo@bar.com>) are parsed as
+        being "pretty".
+        """
         self.assertTrue(is_pretty_from_address('Foo <foo@bar.com>'))
 
     def test_is_pretty_from_raises_validation_error_on_bad_input(self):
+        """
+        Ensure invalid email addresses (e.g. "hello") raise
+        ValidationError if given invalid inputs.
+        """
         with self.assertRaises(ValidationError):
             self.assertTrue(is_pretty_from_address('hello'))
 
     @override_settings(DEFAULT_FROM_EMAIL='Foobar <foo@bar.com>')
     def test_mail_view_complex_from_address(self):
+        """
+        Ensure the mail view correctly sends emails, and sends the
+        expected text (we have a "pretty" from address).
+        """
         with login_superuser(self.client):
             url = reverse('djohno_email')
             response = self.client.get(url)
@@ -163,6 +243,11 @@ class SimpleTest(TestCase):
 
     @override_settings(DEFAULT_FROM_EMAIL='simple@bar.com')
     def test_mail_view_simple_from_address(self):
+        """
+        Ensure the mail view correctly sends emails, and sends the
+        expected text (we don't have a "pretty" from address, so it
+        should tell us about that).
+        """
         with login_superuser(self.client):
             url = reverse('djohno_email')
             response = self.client.get(url)
@@ -182,6 +267,9 @@ class SimpleTest(TestCase):
 
     @override_settings(DEFAULT_FROM_EMAIL='notanemail')
     def test_mail_view_invalid_from_address(self):
+        """
+        Ensure the mail view correctly detects invalid from emails.
+        """
         with login_superuser(self.client):
             url = reverse('djohno_email')
             response = self.client.get(url)
@@ -195,6 +283,10 @@ class SimpleTest(TestCase):
 
     @override_settings(DEFAULT_FROM_EMAIL='webmaster@localhost')
     def test_mail_view_default_from_address(self):
+        """
+        Ensure the mail view correctly detects the DEFAULT_FROM_EMAIL
+        settings not being overriden.
+        """
         with login_superuser(self.client):
             url = reverse('djohno_email')
             response = self.client.get(url)
@@ -207,6 +299,10 @@ class SimpleTest(TestCase):
             self.assertContains(response, "you@example.com")
 
     def test_mail_view_smtp_failure(self):
+        """
+        Ensure the mail view correctly handles SMTP failures.
+        """
+
         def fake_send_mail(subject, message,
                            from_email, recipient_list,
                            fail_silently=False,
@@ -221,11 +317,18 @@ class SimpleTest(TestCase):
                 response = self.client.get(url)
                 self.assertEqual(response.status_code, 200)
                 self.assertTemplateUsed(response, 'djohno/email.html')
+                self.assertEqual(len(mail.outbox), 0)
                 self.assertContains(response, "failed to send")
                 self.assertContains(response,
                                     "(1337, &#39;SMTP is too awesome&#39;)")
 
     def test_mail_view_socket_failure(self):
+        """
+        Ensure the mail view correctly handles socket failures
+        (probably fairly unlikely except in local development
+        scenarios, when you are without an internet connection).
+        """
+
         def fake_send_mail(subject, message,
                            from_email, recipient_list,
                            fail_silently=False,
@@ -240,6 +343,7 @@ class SimpleTest(TestCase):
                 response = self.client.get(url)
                 self.assertEqual(response.status_code, 200)
                 self.assertTemplateUsed(response, 'djohno/email.html')
+                self.assertEqual(len(mail.outbox), 0)
                 self.assertContains(response, "failed to send")
                 self.assertContains(response,
                                     "[Errno 1337] Sockets are too awesome")
