@@ -1,6 +1,9 @@
 from django.core.exceptions import ValidationError
 from django.test import TestCase
-from djohno.utils import is_pretty_from_address
+from djohno.utils import (
+    is_pretty_from_address,
+    get_app_versions
+)
 
 
 class DjohnoUtilTests(TestCase):
@@ -24,3 +27,9 @@ class DjohnoUtilTests(TestCase):
         """
         with self.assertRaises(ValidationError):
             self.assertTrue(is_pretty_from_address('hello'))
+
+    def test_get_app_versions(self):
+        versions = get_app_versions()
+        self.assertEqual(versions['Djohno'], '0.1.2')
+        self.assertEqual(versions['Baz'], '0.4.2')
+        self.assertEqual(versions['Moo'], '0.42')

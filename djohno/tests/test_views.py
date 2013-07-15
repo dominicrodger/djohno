@@ -358,4 +358,4 @@ class DjohnoViewTests(TestCase):
                                 html=True)
             self.assertContains(response,
                                 '<tr>',
-                                count=3)   # 2 rows, 1 header
+                                count=5)   # 4 rows, 1 header

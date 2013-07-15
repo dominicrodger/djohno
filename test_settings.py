@@ -26,6 +26,8 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.staticfiles',
     'djohno',
+    'djohno.tests.moo',
+    'djohno.tests.baz',
 )
 
 ROOT_URLCONF = 'djohno.tests.urls'
