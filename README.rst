@@ -10,8 +10,8 @@ site by editing code live.
 Release Notes
 =============
 
-0.1.2 (Release date TBC)
-------------------------
+0.1.2 (15th July 2013)
+----------------------
 
 * Test re-organising (separated view tests and utility tests), added
   test descriptions.
