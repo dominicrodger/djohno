@@ -4,6 +4,7 @@ from django.core import mail
 from django.core.urlresolvers import reverse
 from django.test import TestCase
 from django.test.utils import override_settings
+import djohno
 import socket
 from mock import Mock, patch
 from smtplib import SMTPConnectError
@@ -351,7 +352,7 @@ class DjohnoViewTests(TestCase):
                                 '<td>Djohno</td>',
                                 html=True)
             self.assertContains(response,
-                                '<td>0.1.2</td>',
+                                '<td>%s</td>' % djohno.__version__,
                                 html=True)
             self.assertContains(response,
                                 '<td>Django</td>',
