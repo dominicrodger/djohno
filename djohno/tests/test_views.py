@@ -85,7 +85,7 @@ class DjohnoViewTests(TestCase):
     def test_djohno_frame_with_login(self):
         """
         Tests to ensure loading the djohno frame view is successful,
-        and renders a view specific strings.
+        and renders a few specific strings.
         """
         with login_superuser(self.client):
             url = reverse('djohno_frame')
@@ -98,7 +98,7 @@ class DjohnoViewTests(TestCase):
     def test_djohno_403_frame_with_login(self):
         """
         Tests to ensure loading the djohno framed 403 view is
-        successful, and renders a view specific strings.
+        successful, and renders a few specific strings.
         """
         with login_superuser(self.client):
             url = reverse('djohno_frame_403')
@@ -111,7 +111,7 @@ class DjohnoViewTests(TestCase):
     def test_djohno_404_frame_with_login(self):
         """
         Tests to ensure loading the djohno framed 404 view is
-        successful, and renders a view specific strings.
+        successful, and renders a few specific strings.
         """
         with login_superuser(self.client):
             url = reverse('djohno_frame_404')
@@ -124,7 +124,7 @@ class DjohnoViewTests(TestCase):
     def test_djohno_500_frame_with_login(self):
         """
         Tests to ensure loading the djohno framed 500 view is
-        successful, and renders a view specific strings.
+        successful, and renders a few specific strings.
         """
         with login_superuser(self.client):
             url = reverse('djohno_frame_500')
@@ -137,7 +137,7 @@ class DjohnoViewTests(TestCase):
     def test_djohno_email_frame_with_login(self):
         """
         Tests to ensure loading the djohno framed email test view is
-        successful, and renders a view specific strings.
+        successful, and renders a few specific strings.
         """
         with login_superuser(self.client):
             url = reverse('djohno_frame_email')
