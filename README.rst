@@ -17,6 +17,9 @@ Release Notes
   test descriptions.
 * Better styles for buttons (based on Flat UI, from
   http://designmodo.github.io/Flat-UI/).
+* Added a "versions" view to see versions of apps in
+  ``INSTALLED_APPS`` (similar to, and based on, the versions panel in
+  Django Debug Toolbar).
 
 0.1.1 (29th June 2013)
 ----------------------

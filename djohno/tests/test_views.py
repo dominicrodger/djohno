@@ -324,3 +324,38 @@ class DjohnoViewTests(TestCase):
                 self.assertContains(response, "failed to send")
                 self.assertContains(response,
                                     "[Errno 1337] Sockets are too awesome")
+
+    def test_djohno_version_frame_with_login(self):
+        """
+        Tests to ensure loading the djohno framed app versions view is
+        successful, and renders a few specific strings.
+        """
+        with login_superuser(self.client):
+            url = reverse('djohno_frame_versions')
+            response = self.client.get(url)
+            self.assertEqual(response.status_code, 200)
+            self.assertContains(response, 'Djohno: Versions')
+            self.assertContains(response,
+                                'src="%s"' % reverse('djohno_versions'))
+
+    def test_djohno_versions_with_login(self):
+        """
+        Tests to ensure loading the djohno versions view is
+        successful.
+        """
+        with login_superuser(self.client):
+            url = reverse('djohno_versions')
+            response = self.client.get(url)
+            self.assertEqual(response.status_code, 200)
+            self.assertContains(response,
+                                '<td>Djohno</td>',
+                                html=True)
+            self.assertContains(response,
+                                '<td>0.1.2</td>',
+                                html=True)
+            self.assertContains(response,
+                                '<td>Django</td>',
+                                html=True)
+            self.assertContains(response,
+                                '<tr>',
+                                count=3)   # 2 rows, 1 header

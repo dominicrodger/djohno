@@ -10,10 +10,14 @@ from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import render
 from django.template.loader import render_to_string
 from django.utils.importlib import import_module
-from django.views.generic import View
-from djohno.utils import is_pretty_from_address
+from django.views.generic import View, TemplateView
+from djohno.utils import (
+    is_pretty_from_address,
+    get_app_versions
+)
 import socket
 from smtplib import SMTPException
+import sys
 
 
 def _imported_symbol(import_path):
@@ -70,6 +74,12 @@ class FrameEmailView(BaseFrameView):
     title = 'Djohno: Email Check'
     frame_url = reverse_lazy('djohno_email')
 frame_email_view = FrameEmailView.as_view()
+
+
+class FrameVersionsView(BaseFrameView):
+    title = 'Djohno: Versions'
+    frame_url = reverse_lazy('djohno_versions')
+frame_versions_view = FrameVersionsView.as_view()
 
 
 class IndexView(View):
@@ -141,3 +151,12 @@ class TestEmailView(View):
                        'sent_successfully': sent_successfully,
                        'error': error})
 test_email = TestEmailView.as_view()
+
+
+class VersionsView(TemplateView):
+    template_name = 'djohno/versions.html'
+
+    def get_context_data(self, **kwargs):
+        return {'sys': '%d.%d.%d' % sys.version_info[:3],
+                'versions': get_app_versions()}
+versions = VersionsView.as_view()
