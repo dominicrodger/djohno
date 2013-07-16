@@ -14,6 +14,22 @@ def is_pretty_from_address(input):
         return False
 
 
+def _get_version_from_app(app):
+    if hasattr(app, 'get_version'):
+        get_version = app.get_version
+        if callable(get_version):
+            return get_version()
+        return get_version
+
+    if hasattr(app, 'VERSION'):
+        return app.VERSION
+
+    if hasattr(app, '__version__'):
+        return app.__version__
+
+    return None
+
+
 def get_app_versions():
     versions = {}
 
@@ -21,17 +37,9 @@ def get_app_versions():
         __import__(app)
         app = sys.modules[app]
 
-        if hasattr(app, 'get_version'):
-            get_version = app.get_version
-            if callable(get_version):
-                version = get_version()
-            else:
-                version = get_version
-        elif hasattr(app, 'VERSION'):
-            version = app.VERSION
-        elif hasattr(app, '__version__'):
-            version = app.__version__
-        else:
+        version = _get_version_from_app(app)
+
+        if version is None:
             continue
 
         if isinstance(version, (list, tuple)):
