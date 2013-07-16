@@ -16,10 +16,9 @@ def is_pretty_from_address(input):
 
 def _get_version_from_app(app):
     if hasattr(app, 'get_version'):
-        get_version = app.get_version
-        if callable(get_version):
-            return get_version()
-        return get_version
+        if callable(app.get_version):
+            return app.get_version()
+        return app.get_version
 
     if hasattr(app, 'VERSION'):
         return app.VERSION
