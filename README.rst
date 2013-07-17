@@ -10,6 +10,13 @@ site by editing code live.
 Release Notes
 =============
 
+0.1.3 (17th July 2013)
+----------------------
+
+* Change the 500 view to just raise an exception
+  ``djohno.views.DjohnoTestException``, so that we actually activate
+  the error logging stuff correctly.
+
 0.1.2 (15th July 2013)
 ----------------------
 

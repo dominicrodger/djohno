@@ -1,15 +1,13 @@
 from django.conf import settings
-from django.conf.urls import (
-    handler403,
-    handler404,
-    handler500
+from django.core.exceptions import (
+    PermissionDenied,
+    ValidationError
 )
-from django.core.exceptions import PermissionDenied, ValidationError
 from django.core.mail import send_mail
 from django.core.urlresolvers import reverse_lazy
+from django.http import Http404
 from django.shortcuts import render
 from django.template.loader import render_to_string
-from django.utils.importlib import import_module
 from django.views.generic import View, TemplateView
 from djohno.utils import (
     is_pretty_from_address,
@@ -18,23 +16,6 @@ from djohno.utils import (
 import socket
 from smtplib import SMTPException
 import sys
-
-
-def _imported_symbol(import_path):
-    """Resolve a dotted path into a symbol, and return that.
-
-    For example...
-
-    >>> _imported_symbol('django.db.models.Model')
-    <class 'django.db.models.base.Model'>
-
-    Raise ImportError if there's no such module, AttributeError if no
-    such symbol.
-
-    """
-    module_name, symbol_name = import_path.rsplit('.', 1)
-    module = import_module(module_name)
-    return getattr(module, symbol_name)
 
 
 class BaseFrameView(View):
@@ -91,26 +72,34 @@ index_view = IndexView.as_view()
 
 
 class BaseExceptionView(View):
-    response_func = None
+    exception = None
+
+    def _get_exception(self):
+        raise self.exception('Intentionally raised exception to test error '
+                             'handling.')
 
     def get(self, request, *args, **kwargs):
         if not request.user.is_superuser:
             raise PermissionDenied
-        return _imported_symbol(self.response_func)(request)
+        self._get_exception()
 
 
 class Test403View(BaseExceptionView):
-    response_func = handler403
+    exception = PermissionDenied
 test_403 = Test403View.as_view()
 
 
 class Test404View(BaseExceptionView):
-    response_func = handler404
+    exception = Http404
 test_404 = Test404View.as_view()
 
 
+class DjohnoTestException(Exception):
+    pass
+
+
 class Test500View(BaseExceptionView):
-    response_func = handler500
+    exception = DjohnoTestException
 test_500 = Test500View.as_view()
 
 

@@ -5,6 +5,7 @@ from django.core.urlresolvers import reverse
 from django.test import TestCase
 from django.test.utils import override_settings
 import djohno
+from djohno.views import DjohnoTestException
 import socket
 from mock import Mock, patch
 from smtplib import SMTPConnectError
@@ -185,16 +186,13 @@ class DjohnoViewTests(TestCase):
 
     def test_djohno_500_with_login(self):
         """
-        Tests to ensure loading the djohno 500 test view results in a
-        500, and uses the expected template (this test may break if
-        you've overriden handler500 with a function that doesn't
-        render 500.html).
+        Tests to ensure loading the djohno 500 test view raises an
+        exception.
         """
         with login_superuser(self.client):
             url = reverse('djohno_500')
-            response = self.client.get(url)
-            self.assertEqual(response.status_code, 500)
-            self.assertTemplateUsed(response, '500.html')
+            with self.assertRaises(DjohnoTestException):
+                self.client.get(url)
 
     @override_settings(DEFAULT_FROM_EMAIL='Foobar <foo@bar.com>')
     def test_mail_view_complex_from_address(self):
