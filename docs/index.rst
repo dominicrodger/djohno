@@ -39,7 +39,7 @@ Once it's in your virtualenv, add it to your ``INSTALLED_APPS``::
    ``'django.template.loaders.app_directories.Loader'`` in your
    ``TEMPLATE_DIRS`` setting.
 
-Once you've added ``djohno`` to your ``INSTALLED_APPS`, add djohno to
+Once you've added ``djohno`` to your ``INSTALLED_APPS``, add djohno to
 your ``urls.py``::
 
     urlpatterns = patterns(
