@@ -7,6 +7,11 @@ integration - to stop me doing evil things post-production to ensure
 I've set up Sentry and my error pages by randomly breaking parts of my
 site by editing code live.
 
+Documentation is available at https://djohno.readthedocs.org.
+
+Tests are run on Travis with every push - see
+https://travis-ci.org/dominicrodger/djohno.
+
 Release Notes
 =============
 
