@@ -14,7 +14,7 @@ def is_pretty_from_address(input):
         return False
 
 
-def _get_version_from_app(app):
+def _get_installed_version_from_app(app):
     if hasattr(app, 'get_version'):
         if callable(app.get_version):
             return app.get_version()
@@ -36,7 +36,7 @@ def get_app_versions():
         __import__(app)
         app = sys.modules[app]
 
-        version = _get_version_from_app(app)
+        version = _get_installed_version_from_app(app)
 
         if version is None:
             continue
@@ -45,6 +45,8 @@ def get_app_versions():
             version = '.'.join(str(o) for o in version)
 
         name = app.__name__.split('.')[-1].replace('_', ' ').capitalize()
-        versions[name] = version
+
+        versions[name] = {}
+        versions[name]['installed'] = version
 
     return versions

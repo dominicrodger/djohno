@@ -13,7 +13,7 @@
   <tbody>
 {% for app, version in versions.items %}
   <tr class="version">
-    <td>{{ app }}</td><td>{{ version }}</td>
+    <td>{{ app }}</td><td>{{ version.installed }}</td>
   </tr>
 {% endfor %}
   </tbody>

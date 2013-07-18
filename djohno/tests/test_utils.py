@@ -29,8 +29,8 @@ class DjohnoUtilTests(TestCase):
         with self.assertRaises(ValidationError):
             self.assertTrue(is_pretty_from_address('hello'))
 
-    def test_get_app_versions(self):
+    def test_get_installed_app_versions(self):
         versions = get_app_versions()
-        self.assertEqual(versions['Djohno'], djohno.__version__)
-        self.assertEqual(versions['Baz'], '0.4.2')
-        self.assertEqual(versions['Moo'], '0.42')
+        self.assertEqual(versions['Djohno']['installed'], djohno.__version__)
+        self.assertEqual(versions['Baz']['installed'], '0.4.2')
+        self.assertEqual(versions['Moo']['installed'], '0.42')
