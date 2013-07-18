@@ -5,8 +5,9 @@ from django.core.exceptions import (
 )
 from django.core.mail import send_mail
 from django.core.urlresolvers import reverse_lazy
-from django.http import Http404
+from django.http import Http404, HttpResponseServerError
 from django.shortcuts import render
+from django.template import Context, loader
 from django.template.loader import render_to_string
 from django.views.generic import View, TemplateView
 from djohno.utils import (
@@ -150,3 +151,9 @@ class VersionsView(TemplateView):
                 'versions': get_app_versions(),
                 'path': sys.path}
 versions = VersionsView.as_view()
+
+
+def server_error(request, template_name='500.html'):
+    tmpl = loader.get_template(template_name)
+    context = Context({'STATIC_URL': settings.STATIC_URL})
+    return HttpResponseServerError(tmpl.render(context))

@@ -358,3 +358,12 @@ class DjohnoViewTests(TestCase):
             self.assertContains(response,
                                 '<tr class="version">',
                                 count=4)
+
+    def test_djohno_server_error_handler(self):
+        """
+        Tests to ensure our handler500 works correctly.
+        """
+        url = reverse('server_error_handler')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 500)
+        self.assertTrue('STATIC_URL' in response.context)
