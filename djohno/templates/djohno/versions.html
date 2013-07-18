@@ -19,4 +19,21 @@
   </tbody>
 </table>
 
+<table class="table table-striped table-hover">
+<thead>
+  <tr>
+    <th>Python Path</th>
+  </tr>
+</thead>
+<tbody>
+  {% for p in path %}
+    {% if p %}
+    <tr>
+      <td>{{ p }}</td>
+    </tr>
+    {% endif %}
+  {% endfor %}
+</tbody>
+</table>
+
 {% endblock %}

@@ -147,5 +147,6 @@ class VersionsView(TemplateView):
 
     def get_context_data(self, **kwargs):
         return {'sys': '%d.%d.%d' % sys.version_info[:3],
-                'versions': get_app_versions()}
+                'versions': get_app_versions(),
+                'path': sys.path}
 versions = VersionsView.as_view()
