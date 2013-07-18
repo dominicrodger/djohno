@@ -356,5 +356,5 @@ class DjohnoViewTests(TestCase):
                                 '<td>Django</td>',
                                 html=True)
             self.assertContains(response,
-                                '<tr>',
-                                count=5)   # 4 rows, 1 header
+                                '<tr class="version">',
+                                count=4)
