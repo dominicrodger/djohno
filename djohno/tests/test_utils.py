@@ -30,6 +30,11 @@ class DjohnoUtilTests(TestCase):
             self.assertTrue(is_pretty_from_address('hello'))
 
     def test_get_installed_app_versions(self):
+        """
+        Ensure we can correctly get the version of a few simple apps
+        (Baz and Moo are bundled in djohno.test, and set up in
+        test_settings.py).
+        """
         versions = get_app_versions()
         self.assertEqual(versions['Djohno']['installed'], djohno.__version__)
         self.assertEqual(versions['Baz']['installed'], '0.4.2')
