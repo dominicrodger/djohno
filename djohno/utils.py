@@ -54,7 +54,7 @@ def get_app_versions():
 
         name = app.__name__.split('.')[-1].replace('_', ' ').capitalize()
 
-        latest_version = get_pypi_version(app)
+        latest_version = get_pypi_version(app.__name__)
 
         versions[name] = {}
         versions[name]['installed'] = version

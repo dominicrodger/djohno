@@ -343,7 +343,7 @@ class DjohnoViewTests(TestCase):
         successful.
         """
         def fake_get_pypi(app):
-            if app.__name__ == 'djohno':
+            if app == 'djohno':
                 return djohno.__version__
 
             return '4.2'
