@@ -7,4 +7,26 @@
     You probably want to override the default 500
     template, <code>500.html</code>.
   </p>
+
+  {% if not STATIC_URL %}
+    <p>
+      It looks like you&rsquo;ve not got <code>STATIC_URL</code>
+      defined in your <code>500.html</code>. Consider adding:
+    </p>
+
+    <pre>
+      handler500 = 'djohno.views.server_error'
+    </pre>
+
+    <p>
+      to your <code>urls.py</code>.
+    </p>
+  {% else %}
+    <p>
+      The good news is that you&rsquo;re correctly setting up
+      <code>STATIC_URL</code> in your <code>500.html</code> templates,
+      so you should be able to use it as normal in your error
+      templates. Its current value is <code>{{ STATIC_URL }}</code>.
+    </p>
+  {% endif %}
 {% endblock %}
