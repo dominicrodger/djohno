@@ -7,13 +7,22 @@
   <thead>
     <tr>
       <th>App</th>
-      <th>Version</th>
+      <th>Installed Version</th>
+      <th>PyPI Version</th>
     </tr>
   </thead>
   <tbody>
 {% for app, version in versions.items %}
   <tr class="version">
-    <td>{{ app }}</td><td>{{ version.installed }}</td>
+    <td class="{{ version.status }}">{{ app }}</td>
+    <td>{{ version.installed }}</td>
+    <td>
+      {% if version.latest %}
+        {{ version.latest }}
+      {% else %}
+        <em>Unknown</em>
+      {% endif %}
+  </td>
   </tr>
 {% endfor %}
   </tbody>

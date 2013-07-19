@@ -5,10 +5,10 @@ from pkgtools.pypi import PyPIJson
 import sys
 
 if sys.version_info >= (3,):
-    from urllib.error import HTTPError
+    from urllib.error import HTTPError, URLError
     import urllib.request as urllib2
 else:
-    from urllib2 import HTTPError
+    from urllib2 import HTTPError, URLError
     import urllib2
 
 
@@ -54,8 +54,20 @@ def get_app_versions():
 
         name = app.__name__.split('.')[-1].replace('_', ' ').capitalize()
 
+        latest_version = get_pypi_version(app)
+
         versions[name] = {}
         versions[name]['installed'] = version
+        versions[name]['latest'] = latest_version
+
+        if latest_version is None:
+            status = 'unknown'
+        elif latest_version == version:
+            status = 'fresh'
+        else:
+            status = 'stale'
+
+        versions[name]['status'] = status
 
     return versions
 
@@ -72,4 +84,7 @@ def get_pypi_version(app):
         return api.version
     except HTTPError:
         # Probably got a 404
+        return None
+    except URLError:
+        # Probably not connected to the internet
         return None

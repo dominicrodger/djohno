@@ -342,22 +342,33 @@ class DjohnoViewTests(TestCase):
         Tests to ensure loading the djohno versions view is
         successful.
         """
-        with login_superuser(self.client):
-            url = reverse('djohno_versions')
-            response = self.client.get(url)
-            self.assertEqual(response.status_code, 200)
-            self.assertContains(response,
-                                '<td>Djohno</td>',
-                                html=True)
-            self.assertContains(response,
-                                '<td>%s</td>' % djohno.__version__,
-                                html=True)
-            self.assertContains(response,
-                                '<td>Django</td>',
-                                html=True)
-            self.assertContains(response,
-                                '<tr class="version">',
-                                count=4)
+        def fake_get_pypi(app):
+            if app.__name__ == 'djohno':
+                return djohno.__version__
+
+            return '4.2'
+
+        with patch('djohno.utils.get_pypi_version',
+                   Mock(side_effect=fake_get_pypi)):
+            with login_superuser(self.client):
+                url = reverse('djohno_versions')
+                response = self.client.get(url)
+                self.assertEqual(response.status_code, 200)
+                self.assertContains(response,
+                                    '<td class="fresh">Djohno</td>',
+                                    html=True)
+                self.assertContains(response,
+                                    '<td>%s</td>' % djohno.__version__,
+                                    html=True)
+                self.assertContains(response,
+                                    '<td class="stale">Django</td>',
+                                    html=True)
+                self.assertContains(response,
+                                    '<td>4.2</td>',
+                                    html=True)
+                self.assertContains(response,
+                                    '<tr class="version">',
+                                    count=4)
 
     def test_djohno_server_error_handler(self):
         """

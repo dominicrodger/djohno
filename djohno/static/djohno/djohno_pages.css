@@ -76,3 +76,11 @@ pre
 .table-hover tbody tr:hover th {
   background-color: #f5f5f5;
 }
+
+.table.table-striped tbody td.stale {
+    background-color: #f77;
+}
+
+.table.table-striped tbody td.fresh {
+    background-color: #7f7;
+}
