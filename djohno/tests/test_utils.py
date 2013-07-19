@@ -8,6 +8,7 @@ from djohno.utils import (
 )
 import httpretty
 from httpretty import httprettified
+from mock import Mock, patch
 
 
 class DjohnoUtilTests(TestCase):
@@ -38,10 +39,22 @@ class DjohnoUtilTests(TestCase):
         (Baz and Moo are bundled in djohno.test, and set up in
         test_settings.py).
         """
-        versions = get_app_versions()
-        self.assertEqual(versions['Djohno']['installed'], djohno.__version__)
-        self.assertEqual(versions['Baz']['installed'], '0.4.2')
-        self.assertEqual(versions['Moo']['installed'], '0.42')
+        def fake_get_pypi(app):
+            if app == 'djohno':
+                return djohno.__version__
+
+            return '4.2'
+
+        with patch('djohno.utils.get_pypi_version',
+                   Mock(side_effect=fake_get_pypi)):
+            versions = get_app_versions()
+            self.assertEqual(versions['Djohno']['installed'],
+                             djohno.__version__)
+            self.assertEqual(versions['Djohno']['latest'], djohno.__version__)
+            self.assertEqual(versions['Baz']['installed'], '0.4.2')
+            self.assertEqual(versions['Baz']['latest'], '4.2')
+            self.assertEqual(versions['Moo']['installed'], '0.42')
+            self.assertEqual(versions['Moo']['latest'], '4.2')
 
     @httprettified
     def test_get_pypi_version_bad_package(self):
