@@ -1,7 +1,7 @@
 Release Notes
 *************
 
-0.1.4 (Release date TBC)
+0.1.4 (19th July 2013)
 ========================
 
 * Also include ``sys.path`` in the versions page.
@@ -12,13 +12,6 @@ Release Notes
   project to use it in the default ``500.html`` template.
 * Attempt to identify what the latest version number for apps is in
   the versions page, and highlight apps that are out of date.
-
-Pending
--------
-
-* Added a way to see if a particular app is in date, by naively
-  assuming the package is installable from PyPI.
-
 
 0.1.3 (17th July 2013)
 ======================
