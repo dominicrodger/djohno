@@ -8,7 +8,10 @@ Release Notes
 * Add margin to the table of app versions.
 * Added a favicon for the djohno views.
 * Added a convenient ``handler500`` method which includes
-  ``STATIC_URL``.
+  ``STATIC_URL``, and include information on how to configure your
+  project to use it in the default ``500.html`` template.
+* Attempt to identify what the latest version number for apps is in
+  the versions page, and highlight apps that are out of date.
 
 Pending
 -------
