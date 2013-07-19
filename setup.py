@@ -15,10 +15,12 @@ setup(
     include_package_data=True,
     install_requires=[
         "Django>=1.4",
+        "pkgtools==0.7.2",
     ],
     tests_require=(
         'django-setuptest==0.1.3',
         'mock==1.0.1',
+        'httpretty==0.6.3',
     ),
     test_suite='setuptest.setuptest.SetupTestSuite',
 )

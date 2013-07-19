@@ -1,7 +1,15 @@
 from django.conf import settings
 from django.core.validators import validate_email
 from email.utils import parseaddr
+from pkgtools.pypi import PyPIJson
 import sys
+
+if sys.version_info >= (3,):
+    from urllib.error import HTTPError
+    import urllib.request as urllib2
+else:
+    from urllib2 import HTTPError
+    import urllib2
 
 
 def is_pretty_from_address(input):
@@ -50,3 +58,18 @@ def get_app_versions():
         versions[name]['installed'] = version
 
     return versions
+
+
+def _patched_request(url, timeout=None):
+    r = urllib2.Request(url)
+    return urllib2.urlopen(r, timeout=timeout).read().decode("utf-8")
+
+
+def get_pypi_version(app):
+    try:
+        api = PyPIJson(app)
+        api.retrieve(req_func=_patched_request)
+        return api.version
+    except HTTPError:
+        # Probably got a 404
+        return None

@@ -3,8 +3,11 @@ from django.test import TestCase
 import djohno
 from djohno.utils import (
     is_pretty_from_address,
-    get_app_versions
+    get_app_versions,
+    get_pypi_version
 )
+import httpretty
+from httpretty import httprettified
 
 
 class DjohnoUtilTests(TestCase):
@@ -39,3 +42,46 @@ class DjohnoUtilTests(TestCase):
         self.assertEqual(versions['Djohno']['installed'], djohno.__version__)
         self.assertEqual(versions['Baz']['installed'], '0.4.2')
         self.assertEqual(versions['Moo']['installed'], '0.42')
+
+    @httprettified
+    def test_get_pypi_version_bad_package(self):
+        """
+        Ensure we fail as expected to get the version of a
+        non-existent package from PyPI.
+        """
+        httpretty.register_uri(
+            httpretty.GET,
+            "http://pypi.python.org/simple/Django",
+            status=404)
+
+        self.assertEqual(get_pypi_version('Django'), None)
+
+    @httprettified
+    def test_get_pypi_version_good_package(self):
+        """
+        Ensure we can get the latest version of a package from PyPI.
+        """
+        httpretty.register_uri(
+            httpretty.GET,
+            "http://pypi.python.org/simple/djohno",
+            status=301,
+            location="http://pypi.python.org/simple/djohno/")
+
+        httpretty.register_uri(
+            httpretty.GET,
+            "http://pypi.python.org/simple/djohno/")
+
+        httpretty.register_uri(
+            httpretty.GET,
+            "http://pypi.python.org/pypi/djohno/json",
+            body="""
+            {
+              "info": {
+                "package_url": "http://pypi.python.org/pypi/djohno",
+                "author": "Dominic Rodger",
+                "version": "0.1.3"
+              }
+            }
+            """)
+
+        self.assertEqual(get_pypi_version('djohno'), "0.1.3")
