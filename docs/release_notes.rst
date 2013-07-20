@@ -1,6 +1,14 @@
 Release Notes
 *************
 
+0.1.5 (Release date TBC)
+========================
+
+* Added images to documentation and README to show what djohno looks
+  like.
+* Make layout responsive.
+* Make mail sending optional (and require a POST).
+
 0.1.4 (19th July 2013)
 ======================
 
