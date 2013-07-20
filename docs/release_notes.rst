@@ -2,7 +2,7 @@ Release Notes
 *************
 
 0.1.4 (19th July 2013)
-========================
+======================
 
 * Also include ``sys.path`` in the versions page.
 * Add margin to the table of app versions.
