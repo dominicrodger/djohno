@@ -1,6 +1,9 @@
 Release Notes
 *************
 
+.. contents:: Table of Contents
+   :local:
+
 0.1.5 (Release date TBC)
 ========================
 
