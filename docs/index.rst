@@ -19,5 +19,6 @@ Contents
    :maxdepth: 2
 
    installation
+   screenshots
    release_notes
    preparing_a_release
