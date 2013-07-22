@@ -9,8 +9,10 @@ Release Notes
 
 * Added images to documentation and ``README.md`` to show what djohno
   looks like.
-* Make layout responsive.
-* Make mail sending optional (and require a POST).
+* Made layout responsive, so it behaves better at lower screen sizes.
+* Made the mail view initially just display information about email
+  settings, with a separate ``@require_POST`` view for actually
+  sending the email.
 
 0.1.4 (19th July 2013)
 ======================
