@@ -204,7 +204,7 @@ class DjohnoViewTests(TestCase):
             url = reverse('djohno_email')
             response = self.client.get(url)
             self.assertEqual(response.status_code, 200)
-            self.assertTemplateUsed(response, 'djohno/email.html')
+            self.assertTemplateUsed(response, 'djohno/email_sent.html')
             self.assertEqual(len(mail.outbox), 1)
             sent = mail.outbox[0]
             self.assertEqual(sent.subject, 'djohno email test')
@@ -228,7 +228,7 @@ class DjohnoViewTests(TestCase):
             url = reverse('djohno_email')
             response = self.client.get(url)
             self.assertEqual(response.status_code, 200)
-            self.assertTemplateUsed(response, 'djohno/email.html')
+            self.assertTemplateUsed(response, 'djohno/email_sent.html')
             self.assertEqual(len(mail.outbox), 1)
             sent = mail.outbox[0]
             self.assertEqual(sent.subject, 'djohno email test')
@@ -292,7 +292,7 @@ class DjohnoViewTests(TestCase):
                        Mock(side_effect=fake_send_mail)):
                 response = self.client.get(url)
                 self.assertEqual(response.status_code, 200)
-                self.assertTemplateUsed(response, 'djohno/email.html')
+                self.assertTemplateUsed(response, 'djohno/email_sent.html')
                 self.assertEqual(len(mail.outbox), 0)
                 self.assertContains(response, "failed to send")
                 self.assertContains(response,
@@ -318,7 +318,7 @@ class DjohnoViewTests(TestCase):
                        Mock(side_effect=fake_send_mail)):
                 response = self.client.get(url)
                 self.assertEqual(response.status_code, 200)
-                self.assertTemplateUsed(response, 'djohno/email.html')
+                self.assertTemplateUsed(response, 'djohno/email_sent.html')
                 self.assertEqual(len(mail.outbox), 0)
                 self.assertContains(response, "failed to send")
                 self.assertContains(response,

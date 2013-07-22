@@ -135,7 +135,7 @@ class TestEmailView(View):
             sent_successfully = False
             error = e
 
-        return render(request, 'djohno/email.html',
+        return render(request, 'djohno/email_sent.html',
                       {'email': request.user.email,
                        'from_email': from_address,
                        'sent_successfully': sent_successfully,
