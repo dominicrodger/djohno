@@ -43,7 +43,10 @@ class DjohnoUtilTests(TestCase):
             if app == 'djohno':
                 return djohno.__version__
 
-            return '4.2'
+            if app == 'djohno.tests.baz':
+                return '4.2'
+
+            return None
 
         with patch('djohno.utils.get_pypi_version',
                    Mock(side_effect=fake_get_pypi)):
@@ -54,7 +57,7 @@ class DjohnoUtilTests(TestCase):
             self.assertEqual(versions['Baz']['installed'], '0.4.2')
             self.assertEqual(versions['Baz']['latest'], '4.2')
             self.assertEqual(versions['Moo']['installed'], '0.42')
-            self.assertEqual(versions['Moo']['latest'], '4.2')
+            self.assertEqual(versions['Moo']['latest'], None)
 
     @httprettified
     def test_get_pypi_version_bad_package(self):
