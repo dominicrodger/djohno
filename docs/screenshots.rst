@@ -12,16 +12,12 @@ Version checks
    ``INSTALLED_APPS`` you've got installed, along with your Python
    path and your Python version.
 
-Error checks
-------------
+Home page
+---------
 
-.. figure:: _static/djohno500.png
+.. figure:: _static/djohnohome.png
    :scale: 50%
-   :alt: Djohno's 500 test page
-
-   Djohno's 500 test page allows you to test your error logging, and
-   the display of your ``500.html`` error page. It even helps by
-   warning you about whether you've got ``STATIC_URL`` set up.
+   :alt: Djohno's home page
 
 Mail checks
 -----------
