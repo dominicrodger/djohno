@@ -31,7 +31,7 @@ iframe {
 
 #djohno_nav ul {
     list-style: none;
-    margin: 0;
+    margin: 0 10px 0 0;
     padding: 0;
     line-height: 50px;
 }
