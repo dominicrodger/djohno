@@ -148,7 +148,7 @@ class TestEmailView(View):
         from_address = settings.DEFAULT_FROM_EMAIL
         try:
             is_pretty = is_pretty_from_address(from_address)
-        except ValidationError as e:
+        except ValidationError:
             return render(request, 'djohno/bad_email.html',
                           {'from_email': from_address})
 
