@@ -1,29 +1,18 @@
-from contextlib import contextmanager
-from django.contrib.auth.models import User
 from django.core import mail
 from django.core.urlresolvers import reverse
-from django.test import TestCase
 from django.test.utils import override_settings
 import djohno
 from djohno.views import DjohnoTestException
 import socket
 from mock import Mock, patch
 from smtplib import SMTPConnectError
+from .utils import (
+    login_superuser,
+    DjohnoBaseViewTests
+)
 
 
-@contextmanager
-def login_superuser(client):
-    client.login(username='admin', password='password')
-    yield
-    client.logout()
-
-
-class DjohnoViewTests(TestCase):
-    def setUp(self):
-        User.objects.create_superuser('admin',
-                                      'foo@example.com',
-                                      'password')
-
+class DjohnoViewTests(DjohnoBaseViewTests):
     def test_djohno_frame_403s_without_login(self):
         """
         Tests to ensure loading the root djohno view without
