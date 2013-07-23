@@ -1,7 +1,6 @@
 from django.core import mail
 from django.core.urlresolvers import reverse
 from django.test.utils import override_settings
-import djohno
 import socket
 from mock import Mock, patch
 from smtplib import SMTPConnectError
