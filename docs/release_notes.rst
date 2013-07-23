@@ -4,6 +4,13 @@ Release Notes
 .. contents:: Table of Contents
    :local:
 
+0.1.6 (Release date TBC)
+========================
+
+* Tests to ensure djohno works with the upcoming release of Django
+  1.6.
+
+
 0.1.5 (23rd July 2013)
 ======================
 

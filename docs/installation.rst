@@ -48,6 +48,6 @@ links to the 403, 404, 500 and mail integration pages.
 Supported Python and Django versions
 ------------------------------------
 
-Currently, djohno supports Django 1.4 and 1.5. Python 2.6 and 2.7 are
-supported for Django 1.4 and 1.5, and Python 3.3 is supported for
-Django 1.5.
+Currently, djohno supports Django 1.4, 1.5, and 1.6. Djohno follows
+Django's lead in the versions of Python it supports (i.e. with Django
+1.5 and 1.6, djohno will support Python 3).
