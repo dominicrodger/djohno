@@ -105,16 +105,16 @@ test_500 = Test500View.as_view()
 
 
 class TestEmailView(View):
-    def get(self, request, *args, **kwargs):
+    def post(self, request, *args, **kwargs):
         if not request.user.is_superuser:
             raise PermissionDenied
 
         from_address = settings.DEFAULT_FROM_EMAIL
+
         try:
             is_pretty = is_pretty_from_address(from_address)
-        except ValidationError as e:
-            return render(request, 'djohno/bad_email.html',
-                          {'from_email': from_address})
+        except ValidationError:
+            return self.get(request, *args, **kwargs)
 
         message = render_to_string('djohno/email_body.txt',
                                    {'pretty_from': is_pretty})
@@ -140,6 +140,22 @@ class TestEmailView(View):
                        'from_email': from_address,
                        'sent_successfully': sent_successfully,
                        'error': error})
+
+    def get(self, request, *args, **kwargs):
+        if not request.user.is_superuser:
+            raise PermissionDenied
+
+        from_address = settings.DEFAULT_FROM_EMAIL
+        try:
+            is_pretty = is_pretty_from_address(from_address)
+        except ValidationError as e:
+            return render(request, 'djohno/bad_email.html',
+                          {'from_email': from_address})
+
+        return render(request, 'djohno/email.html',
+                      {'email': request.user.email,
+                       'from_email': from_address,
+                       'is_pretty': is_pretty})
 test_email = TestEmailView.as_view()
 
 

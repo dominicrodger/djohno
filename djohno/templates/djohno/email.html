@@ -1,0 +1,22 @@
+{% extends "djohno/base.html" %}
+
+{% block content %}
+  <h1>Testing Email</h1>
+
+  <form method="post" action="." name="mailform">
+    {% csrf_token %}
+  </form>
+
+  <p>
+    To send a test email from <strong>{{ from_email }}</strong>
+    to <strong>{{ email }}</strong>, click <a href="#" onclick="document.mailform.submit(); return false;">here</a>.
+  </p>
+
+  {% if not is_pretty %}
+  <p>
+    Consider setting up your <code>DEFAULT_FROM_EMAIL</code> to
+    include a name - instead of <code>{{ from_email }}</code>,
+    consider using <code>Your Name &lt;{{ from_email }}&gt;</code>.
+  </p>
+  {% endif %}
+{% endblock %}

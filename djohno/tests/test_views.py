@@ -74,13 +74,23 @@ class DjohnoViewTests(TestCase):
         self.assertEqual(response.status_code, 403)
         self.assertTemplateUsed(response, '403.html')
 
-    def test_djohno_mail_403s_without_login(self):
+    def test_djohno_idempotent_mail_403s_without_login(self):
         """
         Tests to ensure loading the framed djohno email test view
         without authenticating results in a 403.
         """
         url = reverse('djohno_email')
         response = self.client.get(url)
+        self.assertEqual(response.status_code, 403)
+        self.assertTemplateUsed(response, '403.html')
+
+    def test_djohno_mail_send_403s_without_login(self):
+        """
+        Tests to ensure loading the framed djohno email sending test view
+        without authenticating results in a 403.
+        """
+        url = reverse('djohno_email')
+        response = self.client.post(url)
         self.assertEqual(response.status_code, 403)
         self.assertTemplateUsed(response, '403.html')
 
@@ -202,7 +212,7 @@ class DjohnoViewTests(TestCase):
         """
         with login_superuser(self.client):
             url = reverse('djohno_email')
-            response = self.client.get(url)
+            response = self.client.post(url)
             self.assertEqual(response.status_code, 200)
             self.assertTemplateUsed(response, 'djohno/email_sent.html')
             self.assertEqual(len(mail.outbox), 1)
@@ -217,6 +227,20 @@ class DjohnoViewTests(TestCase):
             self.assertContains(response, "foo@example.com")
             self.assertContains(response, "Foobar &lt;foo@bar.com&gt;")
 
+    @override_settings(DEFAULT_FROM_EMAIL='Foobar <foo@bar.com>')
+    def test_idempotent_mail_view_complex_from_address(self):
+        """
+        Ensure the idempotent mail view correctly parses emails.
+        """
+        with login_superuser(self.client):
+            url = reverse('djohno_email')
+            response = self.client.get(url)
+            self.assertEqual(response.status_code, 200)
+            self.assertTemplateUsed(response, 'djohno/email.html')
+            self.assertEqual(len(mail.outbox), 0)
+            self.assertContains(response, "foo@example.com")
+            self.assertContains(response, "Foobar &lt;foo@bar.com&gt;")
+
     @override_settings(DEFAULT_FROM_EMAIL='simple@bar.com')
     def test_mail_view_simple_from_address(self):
         """
@@ -226,7 +250,7 @@ class DjohnoViewTests(TestCase):
         """
         with login_superuser(self.client):
             url = reverse('djohno_email')
-            response = self.client.get(url)
+            response = self.client.post(url)
             self.assertEqual(response.status_code, 200)
             self.assertTemplateUsed(response, 'djohno/email_sent.html')
             self.assertEqual(len(mail.outbox), 1)
@@ -248,7 +272,7 @@ class DjohnoViewTests(TestCase):
         """
         with login_superuser(self.client):
             url = reverse('djohno_email')
-            response = self.client.get(url)
+            response = self.client.post(url)
             self.assertEqual(response.status_code, 200)
             self.assertTemplateUsed(response, 'djohno/bad_email.html')
             self.assertTemplateUsed(response,
@@ -264,7 +288,7 @@ class DjohnoViewTests(TestCase):
         """
         with login_superuser(self.client):
             url = reverse('djohno_email')
-            response = self.client.get(url)
+            response = self.client.post(url)
             self.assertEqual(response.status_code, 200)
             self.assertTemplateUsed(response, 'djohno/bad_email.html')
             self.assertTemplateUsed(response,
@@ -289,7 +313,7 @@ class DjohnoViewTests(TestCase):
             url = reverse('djohno_email')
             with patch('djohno.views.send_mail',
                        Mock(side_effect=fake_send_mail)):
-                response = self.client.get(url)
+                response = self.client.post(url)
                 self.assertEqual(response.status_code, 200)
                 self.assertTemplateUsed(response, 'djohno/email_sent.html')
                 self.assertEqual(len(mail.outbox), 0)
@@ -315,7 +339,7 @@ class DjohnoViewTests(TestCase):
             url = reverse('djohno_email')
             with patch('djohno.views.send_mail',
                        Mock(side_effect=fake_send_mail)):
-                response = self.client.get(url)
+                response = self.client.post(url)
                 self.assertEqual(response.status_code, 200)
                 self.assertTemplateUsed(response, 'djohno/email_sent.html')
                 self.assertEqual(len(mail.outbox), 0)
