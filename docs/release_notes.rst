@@ -4,8 +4,8 @@ Release Notes
 .. contents:: Table of Contents
    :local:
 
-0.1.5 (Release date TBC)
-========================
+0.1.5 (23rd July 2013)
+======================
 
 * Added images to documentation and ``README.md`` to show what djohno
   looks like.
