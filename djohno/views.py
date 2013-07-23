@@ -127,18 +127,14 @@ class TestEmailView(View):
                       from_address,
                       [request.user.email, ],
                       fail_silently=False)
-            sent_successfully = True
         except SMTPException as e:
-            sent_successfully = False
             error = e
         except socket.error as e:
-            sent_successfully = False
             error = e
 
         return render(request, 'djohno/email_sent.html',
                       {'email': request.user.email,
                        'from_email': from_address,
-                       'sent_successfully': sent_successfully,
                        'error': error})
 
     def get(self, request, *args, **kwargs):
