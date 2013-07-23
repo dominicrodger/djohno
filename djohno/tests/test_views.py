@@ -254,7 +254,6 @@ class DjohnoViewTests(TestCase):
             self.assertTemplateUsed(response,
                                     'djohno/_bad_email_invalid.html')
             self.assertEqual(len(mail.outbox), 0)
-            self.assertContains(response, "no email was sent")
             self.assertContains(response, "notanemail")
 
     @override_settings(DEFAULT_FROM_EMAIL='webmaster@localhost')
