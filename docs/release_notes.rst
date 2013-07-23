@@ -14,8 +14,6 @@ Release Notes
   settings, with a separate ``@require_POST`` view for actually
   sending the email.
 * Slightly nicer styling of headings in templates.
-* Refactor: Remove ``sent_successfully`` from email views and
-  templates.
 
 0.1.4 (19th July 2013)
 ======================
