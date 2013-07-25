@@ -1,6 +1,7 @@
 from django.core.exceptions import ValidationError
 from django.test import TestCase
 import djohno
+from djohno.six import URLError
 from djohno.utils import (
     is_pretty_from_address,
     get_app_versions,
@@ -45,7 +46,6 @@ class DjohnoUtilTests(TestCase):
 
             if app == 'djohno.tests.baz':
                 return '4.2'
-
             return None
 
         with patch('djohno.utils.get_pypi_version',
@@ -71,6 +71,18 @@ class DjohnoUtilTests(TestCase):
             status=404)
 
         self.assertEqual(get_pypi_version('Django'), None)
+
+    def test_get_pypi_version_timeout(self):
+        """
+        Ensure we fail as expected to get the version of a
+        package when PyPI is being unresponsive.
+        """
+        def fake_real_name(pkg):
+            raise URLError("Request timed out")
+
+        with patch('pkgtools.pypi.real_name',
+                   Mock(side_effect=fake_real_name)):
+            self.assertEqual(get_pypi_version('Django'), None)
 
     @httprettified
     def test_get_pypi_version_good_package(self):
