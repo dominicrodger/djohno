@@ -1,16 +1,14 @@
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
+from djohno.six import (
+    HTTPError,
+    URLError,
+    urllib2
+)
 from email.utils import parseaddr
 from pkgtools.pypi import PyPIJson
 import sys
-
-if sys.version_info >= (3,):
-    from urllib.error import HTTPError, URLError
-    import urllib.request as urllib2
-else:
-    from urllib2 import HTTPError, URLError
-    import urllib2
 
 
 def is_pretty_from_address(input):
