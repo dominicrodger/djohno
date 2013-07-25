@@ -78,12 +78,11 @@ def get_app_versions():
     return versions
 
 
-def _patched_request(url, timeout=None):
-    r = urllib2.Request(url)
-    return urllib2.urlopen(r, timeout=timeout).read().decode("utf-8")
-
-
 def get_pypi_version(app):
+    def _patched_request(url, timeout=None):
+        r = urllib2.Request(url)
+        return urllib2.urlopen(r, timeout=timeout).read().decode("utf-8")
+
     try:
         api = PyPIJson(app)
         api.retrieve(req_func=_patched_request)
