@@ -17,6 +17,17 @@ setup(
         "Django>=1.4",
         "pkgtools==0.7.2",
     ],
+    classifiers=[
+        'Development Status :: 5 - Production/Stable'
+        'Environment :: Web Environment',
+        'Framework :: Django',
+        'Intended Audience :: Developers',
+        'License :: OSI Approved :: BSD License',
+        'Operating System :: OS Independent',
+        'Programming Language :: Python :: 2.6',
+        'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3.3',
+    ],
     tests_require=(
         'django-setuptest==0.1.3',
         'mock==1.0.1',
