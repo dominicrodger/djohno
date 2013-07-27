@@ -4,13 +4,14 @@ Release Notes
 .. contents:: Table of Contents
    :local:
 
-0.1.6 (Release date TBC)
-========================
+0.1.6 (27th July 2013)
+======================
 
 * Tests and minor fix to ensure djohno works with the upcoming release
   of Django 1.6 (``webmaster@localhost`` became a valid email address
   in ``django.core.validators.validate_email`` in Django 1.6).
 * Slightly improved test (back to 100% coverage).
+* Added classifiers to setup.py.
 
 0.1.5 (23rd July 2013)
 ======================
