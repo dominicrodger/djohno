@@ -29,7 +29,7 @@ setup(
         'Programming Language :: Python :: 3.3',
     ],
     tests_require=(
-        'django-setuptest==0.1.3',
+        'django-setuptest==0.1.6',
         'mock==1.0.1',
         'httpretty==0.6.3',
     ),
