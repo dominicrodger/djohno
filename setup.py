@@ -9,7 +9,7 @@ setup(
     long_description=open('README.rst').read(),
     author='Dominic Rodger',
     author_email='internet@dominicrodger.com',
-    url='http://github.com/dominicrodger/djohno',
+    url='https://github.com/dominicrodger/djohno',
     license='BSD',
     packages=find_packages(),
     include_package_data=True,
