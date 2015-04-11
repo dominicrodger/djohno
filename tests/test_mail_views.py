@@ -4,7 +4,7 @@ from django.test.utils import override_settings
 import socket
 from mock import Mock, patch
 from smtplib import SMTPConnectError
-from .utils import DjohnoBaseViewTests
+from tests.utils import DjohnoBaseViewTests
 
 
 class DjohnoMailViewTests(DjohnoBaseViewTests):

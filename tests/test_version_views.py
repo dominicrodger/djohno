@@ -1,7 +1,7 @@
 from django.core.urlresolvers import reverse
 import djohno
 from mock import Mock, patch
-from .utils import DjohnoBaseViewTests
+from tests.utils import DjohnoBaseViewTests
 
 
 class DjohnoVersionViewTests(DjohnoBaseViewTests):

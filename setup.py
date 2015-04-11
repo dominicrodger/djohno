@@ -1,6 +1,21 @@
+import sys
 from setuptools import setup, find_packages
+from setuptools.command.test import test as TestCommand
 
 import djohno
+
+
+class PyTest(TestCommand):
+    def finalize_options(self):
+        TestCommand.finalize_options(self)
+        self.test_args = []
+        self.test_suite = True
+
+    def run_tests(self):
+        import pytest
+        errno = pytest.main(self.test_args)
+        sys.exit(errno)
+
 
 setup(
     name='djohno',
@@ -29,9 +44,11 @@ setup(
         'Programming Language :: Python :: 3.3',
     ],
     tests_require=(
-        'django-setuptest==0.1.6',
+        "pytest==2.6.4",
+        "pytest-cov==1.7.0",
+        "pytest-django==2.8.0",
         'mock==1.0.1',
         'httpretty==0.6.3',
     ),
-    test_suite='setuptest.setuptest.SetupTestSuite',
+    cmdclass = {'test': PyTest},
 )

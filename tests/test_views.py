@@ -1,6 +1,6 @@
 from django.core.urlresolvers import reverse
 from djohno.views import DjohnoTestException
-from .utils import DjohnoBaseViewTests
+from tests.utils import DjohnoBaseViewTests
 
 
 class DjohnoViewTests(DjohnoBaseViewTests):

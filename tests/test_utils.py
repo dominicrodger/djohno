@@ -44,7 +44,7 @@ class DjohnoUtilTests(TestCase):
             if app == 'djohno':
                 return djohno.__version__
 
-            if app == 'djohno.tests.baz':
+            if app == 'tests.baz':
                 return '4.2'
             return None
 

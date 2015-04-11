@@ -26,11 +26,11 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.staticfiles',
     'djohno',
-    'djohno.tests.moo',
-    'djohno.tests.baz',
+    'tests.moo',
+    'tests.baz',
 )
 
-ROOT_URLCONF = 'djohno.tests.urls'
+ROOT_URLCONF = 'tests.urls'
 
 PASSWORD_HASHERS = (
     'django.contrib.auth.hashers.MD5PasswordHasher',
@@ -41,3 +41,5 @@ SITE_ID = 1
 DEBUG = False
 
 DEFAULT_FROM_EMAIL = 'from@example.com'
+
+SECRET_KEY = 'thisbagismadefromrecycledmaterial'

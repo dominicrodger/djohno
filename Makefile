@@ -22,7 +22,7 @@ clean:
 	rm -rf __pycache__
 
 lint:
-	flake8 djohno setup.py
+	flake8 djohno tests setup.py
 
 test:
 	python setup.py test
