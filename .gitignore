@@ -7,3 +7,4 @@ pep8.txt
 docs/_build/
 dist/
 .coverage
+.eggs/
