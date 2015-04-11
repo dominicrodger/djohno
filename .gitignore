@@ -3,7 +3,7 @@
 *.egg-info/
 coverage.xml
 pep8.txt
-*.egg/
+*.egg
 docs/_build/
 dist/
 .coverage
