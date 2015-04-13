@@ -1,17 +1,6 @@
 Screenshots of djohno
 =====================
 
-Version checks
---------------
-
-.. figure:: _static/djohno.png
-   :scale: 50%
-   :alt: Djohno's version page
-
-   Djohno's version page shows you what versions of apps in
-   ``INSTALLED_APPS`` you've got installed, along with your Python
-   path and your Python version.
-
 Home page
 ---------
 

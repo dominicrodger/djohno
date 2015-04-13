@@ -9,14 +9,10 @@ from django.http import Http404, HttpResponseServerError
 from django.shortcuts import render
 from django.template import Context, loader
 from django.template.loader import render_to_string
-from django.views.generic import View, TemplateView
-from djohno.utils import (
-    is_pretty_from_address,
-    get_app_versions
-)
+from django.views.generic import View
+from djohno.utils import is_pretty_from_address
 import socket
 from smtplib import SMTPException
-import sys
 
 
 class BaseFrameView(View):
@@ -56,12 +52,6 @@ class FrameEmailView(BaseFrameView):
     title = 'Djohno: Email Check'
     frame_url = reverse_lazy('djohno_email')
 frame_email_view = FrameEmailView.as_view()
-
-
-class FrameVersionsView(BaseFrameView):
-    title = 'Djohno: Versions'
-    frame_url = reverse_lazy('djohno_versions')
-frame_versions_view = FrameVersionsView.as_view()
 
 
 class IndexView(View):
@@ -153,16 +143,6 @@ class TestEmailView(View):
                        'from_email': from_address,
                        'is_pretty': is_pretty})
 test_email = TestEmailView.as_view()
-
-
-class VersionsView(TemplateView):
-    template_name = 'djohno/versions.html'
-
-    def get_context_data(self, **kwargs):
-        return {'sys': '%d.%d.%d' % sys.version_info[:3],
-                'versions': get_app_versions(),
-                'path': sys.path}
-versions = VersionsView.as_view()
 
 
 def server_error(request, template_name='500.html'):

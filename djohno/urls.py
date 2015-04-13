@@ -6,13 +6,11 @@ from .views import (
     frame_404_view,
     frame_500_view,
     frame_email_view,
-    frame_versions_view,
     index_view,
     test_403,
     test_404,
     test_500,
-    test_email,
-    versions
+    test_email
 )
 
 urlpatterns = patterns(
@@ -22,11 +20,9 @@ urlpatterns = patterns(
     url(r'^404/$', frame_404_view, name='djohno_frame_404'),
     url(r'^500/$', frame_500_view, name='djohno_frame_500'),
     url(r'^email/$', frame_email_view, name='djohno_frame_email'),
-    url(r'^versions/$', frame_versions_view, name='djohno_frame_versions'),
     url(r'^framed/index/$', index_view, name='djohno_index'),
     url(r'^framed/403/$', test_403, name='djohno_403'),
     url(r'^framed/404/$', test_404, name='djohno_404'),
     url(r'^framed/500/$', test_500, name='djohno_500'),
     url(r'^framed/email/$', test_email, name='djohno_email'),
-    url(r'^framed/versions/$', versions, name='djohno_versions'),
 )
