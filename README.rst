@@ -20,6 +20,6 @@ Sneak Preview
 
 When installed, djohno looks a little bit like this:
 
-.. image:: https://djohno.readthedocs.org/en/latest/_images/djohno.png
+.. image:: https://djohno.readthedocs.org/en/latest/_images/djohnohome.png
    :scale: 75%
    :alt: djohno's version view

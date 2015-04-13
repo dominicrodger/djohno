@@ -30,7 +30,6 @@ setup(
     include_package_data=True,
     install_requires=[
         "Django>=1.4",
-        "pkgtools==0.7.2",
     ],
     classifiers=[
         'Development Status :: 5 - Production/Stable',
@@ -48,7 +47,6 @@ setup(
         "pytest-cov==1.7.0",
         "pytest-django==2.8.0",
         'mock==1.0.1',
-        'httpretty==0.6.3',
     ),
     cmdclass = {'test': PyTest},
 )
