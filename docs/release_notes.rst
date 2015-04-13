@@ -4,6 +4,17 @@ Release Notes
 .. contents:: Table of Contents
    :local:
 
+0.2.0 (13th April 2015)
+=======================
+
+* Official, tested, support for Django 1.7 and 1.8;
+* Switched to py.test for testing;
+* Removed version checks (the ability to compare versions of
+  currently installed libraries vs what's available on PyPI) - the
+  checks were a bit hacky, since there's not a common API for
+  determining the version of a given app that's installed, and it
+  wasn't much use in practice.
+
 0.1.6 (27th July 2013)
 ======================
 
